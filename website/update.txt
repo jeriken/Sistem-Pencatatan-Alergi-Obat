@@ -1,0 +1,4 @@
+👷 build(laravel): install laravel core
+👷 build(laravel): install & setup badaso package
+👷 build(laravel): setup database
+👷 build(laravel): seed database for badaso setup
