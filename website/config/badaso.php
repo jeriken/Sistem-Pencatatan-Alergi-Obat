@@ -2,9 +2,9 @@
 
 return [
     'db_name' => env('DB_DATABASE'),
-    'admin_panel_route_prefix' => env('MIX_ADMIN_PANEL_ROUTE_PREFIX', 'badaso-dashboard'),
+    'admin_panel_route_prefix' => env('MIX_ADMIN_PANEL_ROUTE_PREFIX', 'dashboard'),
     'default_menu' => env('MIX_DEFAULT_MENU', 'general'),
-    'api_route_prefix' => env('MIX_API_ROUTE_PREFIX', 'badaso-api'),
+    'api_route_prefix' => env('MIX_API_ROUTE_PREFIX', 'api'),
     'license_key' => env('BADASO_LICENSE_KEY'),
     'database' => [
         'prefix' => env('BADASO_TABLE_PREFIX', 'badaso_'),
@@ -54,7 +54,7 @@ return [
                 'type' => 'image/png',
             ],
         ],
-        'start_url' => env('MIX_ADMIN_PANEL_ROUTE_PREFIX', 'badaso-dashboard'),
+        'start_url' => env('MIX_ADMIN_PANEL_ROUTE_PREFIX', 'dashboard'),
         'display' => 'standalone',
         'theme_color' => '#06bbd3',
         'background_color' => '#06bbd3',

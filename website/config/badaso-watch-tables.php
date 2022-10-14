@@ -1,5 +1,8 @@
 <?php
 
 return [
-    // table names for generating CRUD_DATA seeders.
+    'alergi',
+    'bpjs',
+    'ktp',
+    'pasien',
 ];
