@@ -48,7 +48,7 @@ class BpjsCRUDDataTypeAdded extends Seeder
                 'notification' => '[]',
                 'is_soft_delete' => false,
                 'created_at' => '2022-10-14T08:42:56.000000Z',
-                'updated_at' => '2022-10-14T08:50:02.000000Z',
+                'updated_at' => '2022-10-15T06:27:23.000000Z',
             ));
 
             Badaso::model('Permission')->generateFor('bpjs');

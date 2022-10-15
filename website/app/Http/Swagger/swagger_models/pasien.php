@@ -30,7 +30,7 @@
   *          required=true,
   *          in="path",
   *          @OA\Schema(
-  *              type="string"
+  *              type="integer"
   *          )
   *      ),
   *      @OA\Response(response=200, description="Successful operation"),
@@ -58,7 +58,7 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="object",
-  *                     example={"id":"Abc", "ktpId":"", "bpjsId":"", "alergiId":"", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"2021-01-01T00:00:00.000Z", "alamat":"Abc", "goldar":"Abc", "nik":"123"},
+  *                     example={"ktpId":"Abc", "bpjsId":"Abc", "alergiId":"123", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"Abc", "alamat":"Abc", "goldar":"Abc", "nik":"123"},
   *                 ),
   *             )
   *         )
@@ -88,7 +88,7 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="object",
-  *                     example={"id":"Abc", "ktpId":"", "bpjsId":"", "alergiId":"", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"2021-01-01T00:00:00.000Z", "alamat":"Abc", "goldar":"Abc", "nik":"123"},
+  *                     example={"ktpId":"Abc", "bpjsId":"Abc", "alergiId":"123", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"Abc", "alamat":"Abc", "goldar":"Abc", "nik":"123"},
   *                ),
   *             )
   *         )
@@ -126,7 +126,7 @@
   *                     @OA\Items(
   *                         type="object",
   *                         @OA\Property(type="string", property="field", default="id"),
-  *                         @OA\Property(type="string", property="value", example="Abc"),
+  *                         @OA\Property(type="integer", property="value", example="123"),
   *                     ),
   *                ),
   *             )
@@ -165,7 +165,7 @@
   *                     @OA\Items(
   *                         type="object",
   *                         @OA\Property(type="string", property="field", default="ids"),
-  *                         @OA\Property(type="{}", property="value", example="Abc,Abc"),
+  *                         @OA\Property(type="{}", property="value", example="123,123"),
   *                     ),
   *                ),
   *             )
@@ -201,13 +201,13 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="array",
-  *                     example={{"id":"Abc", "ktpId":"", "bpjsId":"", "alergiId":"", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"2021-01-01T00:00:00.000Z", "alamat":"Abc", "goldar":"Abc", "nik":"123", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}, {"id":"Abc", "ktpId":"", "bpjsId":"", "alergiId":"", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"2021-01-01T00:00:00.000Z", "alamat":"Abc", "goldar":"Abc", "nik":"123", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}},
+  *                     example={{"id":"123", "ktpId":"Abc", "bpjsId":"Abc", "alergiId":"123", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"Abc", "alamat":"Abc", "goldar":"Abc", "nik":"123", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}, {"id":"123", "ktpId":"Abc", "bpjsId":"Abc", "alergiId":"123", "nama":"Abc", "tmpLahir":"Abc", "tglLahir":"Abc", "alamat":"Abc", "goldar":"Abc", "nik":"123", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}},
   *                     @OA\Items(
   *                         type="object",
-  *                         @OA\Property(type="string", property="id"), 
+  *                         @OA\Property(type="integer", property="id"), 
   *                         @OA\Property(type="string", property="ktpId"), 
   *                         @OA\Property(type="string", property="bpjsId"), 
-  *                         @OA\Property(type="string", property="alergiId"), 
+  *                         @OA\Property(type="integer", property="alergiId"), 
   *                         @OA\Property(type="string", property="nama"), 
   *                         @OA\Property(type="string", property="tmpLahir"), 
   *                         @OA\Property(type="string", property="tglLahir"), 

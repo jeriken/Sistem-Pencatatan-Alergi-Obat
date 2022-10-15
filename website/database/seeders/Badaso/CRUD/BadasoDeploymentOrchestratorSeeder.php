@@ -22,6 +22,12 @@ class BadasoDeploymentOrchestratorSeeder extends Seeder
         $this->seed(KtpCRUDDataRowAdded::class);
         $this->seed(BpjsCRUDDataTypeAdded::class);
         $this->seed(BpjsCRUDDataRowAdded::class);
+        
+        
+        
+        
+        $this->seed(AlergiCRUDDataDeleted::class);
+        $this->seed(PasienCRUDDataDeleted::class);
         $this->seed(AlergiCRUDDataTypeAdded::class);
         $this->seed(AlergiCRUDDataRowAdded::class);
         $this->seed(PasienCRUDDataTypeAdded::class);

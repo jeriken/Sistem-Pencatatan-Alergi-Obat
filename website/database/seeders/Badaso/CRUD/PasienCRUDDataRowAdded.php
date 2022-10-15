@@ -27,14 +27,14 @@ class PasienCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'id',
-                    'type' => 'hidden',
-                    'display_name' => 'Id',
+                    'type' => 'number',
+                    'display_name' => 'ID',
                     'required' => 1,
                     'browse' => 0,
                     'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
+                    'edit' => 0,
+                    'add' => 0,
+                    'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
                     'order' => 1,
@@ -43,8 +43,8 @@ class PasienCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'ktp_id',
-                    'type' => 'relation',
-                    'display_name' => 'Ktp',
+                    'type' => 'text',
+                    'display_name' => 'KTP',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,
@@ -52,15 +52,15 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
+                    'relation' => NULL,
                     'order' => 2,
                 ),
                 2 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'bpjs_id',
-                    'type' => 'relation',
-                    'display_name' => 'Bpjs',
+                    'type' => 'text',
+                    'display_name' => 'BPJS',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,
@@ -68,14 +68,14 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"barcode"}',
+                    'relation' => NULL,
                     'order' => 3,
                 ),
                 3 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'alergi_id',
-                    'type' => 'relation',
+                    'type' => 'number',
                     'display_name' => 'Alergi',
                     'required' => 0,
                     'browse' => 1,
@@ -84,7 +84,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"alergi","destination_table_column":"alergi","destination_table_display_column":"alergi"}',
+                    'relation' => NULL,
                     'order' => 4,
                 ),
                 4 => 
@@ -92,7 +92,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'data_type_id' => $data_type->id,
                     'field' => 'nama',
                     'type' => 'text',
-                    'display_name' => 'Nama',
+                    'display_name' => 'Nama lengkap',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -108,7 +108,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'data_type_id' => $data_type->id,
                     'field' => 'tmp_lahir',
                     'type' => 'text',
-                    'display_name' => 'Tmp Lahir',
+                    'display_name' => 'Tempat lahir',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -123,8 +123,8 @@ class PasienCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'tgl_lahir',
-                    'type' => 'datetime',
-                    'display_name' => 'Tgl Lahir',
+                    'type' => 'date',
+                    'display_name' => 'Tanggal lahir',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -156,7 +156,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'data_type_id' => $data_type->id,
                     'field' => 'goldar',
                     'type' => 'select',
-                    'display_name' => 'Goldar',
+                    'display_name' => 'Golongan darah',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,
@@ -165,6 +165,10 @@ class PasienCRUDDataRowAdded extends Seeder
                     'delete' => 1,
                     'details' => '{
 "items": [
+{
+"label": "-",
+"value": "-"
+},
 {
 "label": "AB",
 "value": "AB"
@@ -180,7 +184,8 @@ class PasienCRUDDataRowAdded extends Seeder
 {
 "label": "O",
 "value": "O"
-}    ]
+}
+]
 }',
                     'relation' => NULL,
                     'order' => 9,
@@ -190,7 +195,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'data_type_id' => $data_type->id,
                     'field' => 'nik',
                     'type' => 'number',
-                    'display_name' => 'Nik',
+                    'display_name' => 'NIK',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,

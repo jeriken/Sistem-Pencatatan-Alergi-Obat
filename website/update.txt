@@ -1,10 +1,6 @@
-💚 ci(badaso): change prefix admin panel url from "badaso-dashboard" to "dashboard"
-💚 ci(badaso): change prefix api url from "badaso-api" to "api"
-✨ feat(table): create "pasien" table
-✨ feat(table): create "ktp" table
-✨ feat(table): create "bpjs" table
-✨ feat(table): create "alergi" table
-✨ feat(pasien): create crud for pasien table
-✨ feat(ktp): create crud for ktp table
-✨ feat(bpjs): create crud for bpjs table
-✨ feat(alergi): create crud for alergi table
+💚 ci(language): change english to indonesian language
+💚 ci(table): make every "id" on table cannot be modified
+💚 ci(table): deleted alergi_id because its useless
+💚 ci(pasien): override pasien "add" pages, now can be edited outside badaso vendor
+💚 ci(pasien): override pasien "browser" pages, now can be edited outside badaso vendor
+💚 ci(pasien): override pasien "edit" pages, now can be edited outside badaso vendor

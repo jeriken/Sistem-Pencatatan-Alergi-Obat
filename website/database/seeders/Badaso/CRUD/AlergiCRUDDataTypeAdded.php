@@ -28,7 +28,6 @@ class AlergiCRUDDataTypeAdded extends Seeder
             }
 
             \DB::table('badaso_data_types')->insert(array (
-                'id' => 3,
                 'name' => 'alergi',
                 'slug' => 'alergi',
                 'display_name_singular' => 'Alergi',
@@ -42,13 +41,13 @@ class AlergiCRUDDataTypeAdded extends Seeder
                 'order_direction' => NULL,
                 'generate_permissions' => true,
                 'server_side' => false,
-                'is_maintenance' => 0,
                 'description' => NULL,
                 'details' => NULL,
                 'notification' => '[]',
                 'is_soft_delete' => false,
-                'created_at' => '2022-10-14T08:43:54.000000Z',
-                'updated_at' => '2022-10-14T08:50:21.000000Z',
+                'updated_at' => '2022-10-15T08:38:20.000000Z',
+                'created_at' => '2022-10-15T08:38:20.000000Z',
+                'id' => 5,
             ));
 
             Badaso::model('Permission')->generateFor('alergi');

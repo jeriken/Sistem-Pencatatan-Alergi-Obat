@@ -56,7 +56,7 @@ return [
         ],
         'start_url' => env('MIX_ADMIN_PANEL_ROUTE_PREFIX', 'dashboard'),
         'display' => 'standalone',
-        'theme_color' => '#06bbd3',
-        'background_color' => '#06bbd3',
+        'theme_color' => '#00923F',
+        'background_color' => '#00923F',
     ],
 ];

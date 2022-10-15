@@ -27,35 +27,19 @@ class AlergiCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'id',
-                    'type' => 'hidden',
+                    'type' => 'number',
                     'display_name' => 'Id',
                     'required' => 1,
                     'browse' => 0,
                     'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
+                    'edit' => 0,
+                    'add' => 0,
+                    'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
                     'order' => 1,
                 ),
                 1 => 
-                array (
-                    'data_type_id' => $data_type->id,
-                    'field' => 'alergi',
-                    'type' => 'number',
-                    'display_name' => 'Alergi',
-                    'required' => 1,
-                    'browse' => 1,
-                    'read' => 1,
-                    'edit' => 1,
-                    'add' => 1,
-                    'delete' => 1,
-                    'details' => '{}',
-                    'relation' => NULL,
-                    'order' => 2,
-                ),
-                2 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'data',
@@ -69,9 +53,9 @@ class AlergiCRUDDataRowAdded extends Seeder
                     'delete' => 1,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 3,
+                    'order' => 2,
                 ),
-                3 => 
+                2 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'created_at',
@@ -85,9 +69,9 @@ class AlergiCRUDDataRowAdded extends Seeder
                     'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 4,
+                    'order' => 3,
                 ),
-                4 => 
+                3 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'updated_at',
@@ -101,7 +85,7 @@ class AlergiCRUDDataRowAdded extends Seeder
                     'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 5,
+                    'order' => 4,
                 ),
             ));
 

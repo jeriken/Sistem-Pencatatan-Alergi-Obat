@@ -30,7 +30,7 @@
   *          required=true,
   *          in="path",
   *          @OA\Schema(
-  *              type="string"
+  *              type="integer"
   *          )
   *      ),
   *      @OA\Response(response=200, description="Successful operation"),
@@ -58,7 +58,7 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="object",
-  *                     example={"id":"Abc", "barcode":"Abc", "nomor":"123", "faskes":"Abc"},
+  *                     example={"barcode":"Abc", "nomor":"123", "faskes":"Abc"},
   *                 ),
   *             )
   *         )
@@ -88,7 +88,7 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="object",
-  *                     example={"id":"Abc", "barcode":"Abc", "nomor":"123", "faskes":"Abc"},
+  *                     example={"barcode":"Abc", "nomor":"123", "faskes":"Abc"},
   *                ),
   *             )
   *         )
@@ -126,7 +126,7 @@
   *                     @OA\Items(
   *                         type="object",
   *                         @OA\Property(type="string", property="field", default="id"),
-  *                         @OA\Property(type="string", property="value", example="Abc"),
+  *                         @OA\Property(type="integer", property="value", example="123"),
   *                     ),
   *                ),
   *             )
@@ -165,7 +165,7 @@
   *                     @OA\Items(
   *                         type="object",
   *                         @OA\Property(type="string", property="field", default="ids"),
-  *                         @OA\Property(type="{}", property="value", example="Abc,Abc"),
+  *                         @OA\Property(type="{}", property="value", example="123,123"),
   *                     ),
   *                ),
   *             )
@@ -201,10 +201,10 @@
   *                 @OA\Property(
   *                     property="data",
   *                     type="array",
-  *                     example={{"id":"Abc", "barcode":"Abc", "nomor":"123", "faskes":"Abc", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}, {"id":"Abc", "barcode":"Abc", "nomor":"123", "faskes":"Abc", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}},
+  *                     example={{"id":"123", "barcode":"Abc", "nomor":"123", "faskes":"Abc", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}, {"id":"123", "barcode":"Abc", "nomor":"123", "faskes":"Abc", "createdAt":"2021-01-01T00:00:00.000Z", "updatedAt":"2021-01-01T00:00:00.000Z"}},
   *                     @OA\Items(
   *                         type="object",
-  *                         @OA\Property(type="string", property="id"), 
+  *                         @OA\Property(type="integer", property="id"), 
   *                         @OA\Property(type="string", property="barcode"), 
   *                         @OA\Property(type="integer", property="nomor"), 
   *                         @OA\Property(type="string", property="faskes"), 
