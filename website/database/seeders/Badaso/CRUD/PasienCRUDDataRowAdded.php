@@ -43,7 +43,7 @@ class PasienCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'ktp_id',
-                    'type' => 'text',
+                    'type' => 'relation',
                     'display_name' => 'KTP',
                     'required' => 0,
                     'browse' => 1,
@@ -52,14 +52,14 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => NULL,
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
                     'order' => 2,
                 ),
                 2 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'bpjs_id',
-                    'type' => 'text',
+                    'type' => 'relation',
                     'display_name' => 'BPJS',
                     'required' => 0,
                     'browse' => 1,
@@ -68,14 +68,14 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => NULL,
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"barcode"}',
                     'order' => 3,
                 ),
                 3 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'alergi_id',
-                    'type' => 'number',
+                    'type' => 'relation',
                     'display_name' => 'Alergi',
                     'required' => 0,
                     'browse' => 1,
@@ -84,7 +84,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => NULL,
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"alergi","destination_table_column":"id","destination_table_display_column":"data"}',
                     'order' => 4,
                 ),
                 4 => 

@@ -3,7 +3,7 @@
     <template v-if="!isMaintenance">
       <badaso-breadcrumb-row full> </badaso-breadcrumb-row>
       <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('edit', dataType)">
-        <vs-col vs-lg="6">
+        <vs-col vs-lg="12">
           <vs-card>
             <div slot="header">
               <h3>
@@ -18,193 +18,44 @@
               <vs-col vs-lg="12" v-if="!isValid">
                 <p class="is-error">No fields have been filled</p>
               </vs-col>
-              <badaso-text
-                v-model="dataType.dataRows[4].value"
+              <badaso-text disabled
+                v-model="dataType.dataRows[1].value"
                 size="12"
-                :label="dataType.dataRows[4].displayName"
-                placeholder="Supriyati"
+                :label="dataType.dataRows[1].displayName"
+                placeholder="Scan KTP"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[4].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)
                   ]
                 "
               ></badaso-text>
-              <badaso-text
-                v-model="dataType.dataRows[5].value"
-                size="12"
-                :label="dataType.dataRows[5].displayName"
-                placeholder="Banjarnegara"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[5].field)
-                  ]
-                "
-              ></badaso-text>
-              <badaso-date
-                :label="dataType.dataRows[6].displayName"
-                :placeholder="dataType.dataRows[6].displayName"
-                v-model="dataType.dataRows[6].value"
-                size="12"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[6].field)
-                  ]
-                "
-              ></badaso-date>
-            </vs-row>
-          </vs-card>
-        </vs-col>
-        <vs-col vs-lg="6" class="pr-0">
-          <vs-card>
-            <div slot="header">
-              <h3></h3>
-            </div>
-            <vs-row>
-              <badaso-textarea
-                :label="dataType.dataRows[7].displayName"
-                placeholder="Wanayasa RT 02/01
-                Wanayasa
-                Banjarnegara"
-                v-model="dataType.dataRows[7].value"
-                size="12"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[7].field)
-                  ]
-                "
-              ></badaso-textarea>
               <badaso-select
-                :label="dataType.dataRows[8].displayName"
-                :placeholder="dataType.dataRows[8].displayName"
-                v-model="dataType.dataRows[8].value"
+                :label="dataType.dataRows[2].displayName"
+                placeholder="Pilih agama"
+                v-model="dataType.dataRows[2].value"
                 size="12"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[8].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)
                   ]
                 "
                 :items="
-                  dataType.dataRows[8].details.items
-                    ? dataType.dataRows[8].details.items
+                  dataType.dataRows[2].details.items
+                    ? dataType.dataRows[2].details.items
                     : []
                 "
               ></badaso-select>
-              <badaso-number
-                :label="dataType.dataRows[9].displayName"
-                placeholder="33041707XXXXXXXXXX"
-                v-model="dataType.dataRows[9].value"
+              <badaso-text
+                v-model="dataType.dataRows[3].value"
                 size="12"
+                :label="dataType.dataRows[3].displayName"
+                :placeholder="dataType.dataRows[3].displayName"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[9].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[3].field)
                   ]
                 "
-              ></badaso-number>
-            </vs-row>
-          </vs-card>
-        </vs-col>
-        <vs-col vs-lg="4" class="pr-0">
-          <vs-card>
-            <div slot="header">
-              <h3>KTP</h3>
-            </div>
-            <vs-row v-if="dataType.dataRows[1].value">
-              <vs-col vs-lg="3"> {{ dataType.dataRows[1].value }} </vs-col
-              ><vs-col vs-lg="4">
-                <vs-button
-                  color="warning"
-                  type="border"
-                  :to="{
-                    path:
-                      '/dashboard/general/ktp/' +
-                      dataType.dataRows[1].value +
-                      '/edit',
-                  }"
-                  >Ubah</vs-button
-                >
-              </vs-col>
-            </vs-row>
-            <vs-row v-else>
-              <vs-button
-                size="default"
-                type="border"
-                icon="add"
-                :to="{
-                  path: '/dashboard/general/ktp/add',
-                  query: { ids: dataType.dataRows[0].value },
-                }"
-                >Tambah</vs-button
-              >
-            </vs-row>
-          </vs-card>
-        </vs-col>
-        <vs-col vs-lg="4" class="pr-0">
-          <vs-card>
-            <div slot="header">
-              <h3>BPJS</h3>
-            </div>
-            <vs-row v-if="dataType.dataRows[2].value">
-              <vs-col vs-lg="3"> {{ dataType.dataRows[2].value }} </vs-col
-              ><vs-col vs-lg="4">
-                <vs-button
-                  color="warning"
-                  type="border"
-                  :to="{
-                    path:
-                      '/dashboard/general/bpjs/' +
-                      dataType.dataRows[2].value +
-                      '/edit',
-                  }"
-                  >Ubah</vs-button
-                >
-              </vs-col>
-            </vs-row>
-            <vs-row v-else>
-              <vs-button
-                size="default"
-                type="border"
-                icon="add"
-                :to="{
-                  path: '/dashboard/general/bpjs/add',
-                  query: { ids: dataType.dataRows[0].value },
-                }"
-                >Tambah</vs-button
-              >
-            </vs-row>
-          </vs-card>
-        </vs-col>
-        <vs-col vs-lg="4" class="pr-0">
-          <vs-card>
-            <div slot="header">
-              <h3>Alergi</h3>
-            </div>
-            <vs-row v-if="dataType.dataRows[3].value">
-              <vs-col vs-lg="3"> {{ dataType.dataRows[3].value }} </vs-col
-              ><vs-col vs-lg="4">
-                <vs-button
-                  type="border"
-                  color="warning"
-                  :to="{
-                    path:
-                      '/dashboard/general/alergi/' +
-                      dataType.dataRows[3].value +
-                      '/edit',
-                  }"
-                  >Ubah</vs-button
-                >
-              </vs-col>
-            </vs-row>
-            <vs-row v-else>
-              <vs-button
-                size="default"
-                type="border"
-                icon="add"
-                :to="{
-                  path: '/dashboard/general/alergi/add',
-                  query: { ids: dataType.dataRows[3].value },
-                }"
-                >Tambah</vs-button
-              >
+              ></badaso-text>
             </vs-row>
           </vs-card>
         </vs-col>
@@ -338,7 +189,7 @@ export default {
       try {
         const response = await this.$api.badasoEntity.read({
           slug: this.$route.params.slug,
-          id: this.$route.params.id,
+          rfid: this.$route.params.id,
         });
 
         const {

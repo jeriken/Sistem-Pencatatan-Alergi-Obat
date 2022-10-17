@@ -123,11 +123,6 @@
                 multiple
               >
                 <template slot="thead">
-                  <vs-th>{{ dataType.dataRows[4].displayName }}</vs-th>
-                  <vs-th>Tempat, {{ dataType.dataRows[6].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[7].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[8].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[9].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[2].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[3].displayName }}</vs-th>
@@ -141,68 +136,14 @@
                     :key="index"
                     v-for="(rec, index) in records"
                   >
-                    <vs-td :data="rec.nama">
-                      {{ rec.nama }}
+                    <vs-td :data="rec.rfid">
+                      {{ rec.rfid }}
                     </vs-td>
-                    <vs-td :data="rec.tmpLahir">
-                      {{ rec.tmpLahir }}, {{ date(rec.tglLahir) }}
+                    <vs-td :data="rec.agama">
+                      {{ rec.agama }}
                     </vs-td>
-                    <vs-td :data="rec.alamat">
-                      {{ rec.alamat }}
-                    </vs-td>
-                    <vs-td :data="rec.goldar">
-                      {{ rec.goldar }}
-                    </vs-td>
-                    <vs-td :data="rec.nik">
-                      {{ rec.nik }}
-                    </vs-td>
-                    <vs-td :data="rec.ktpId" v-if="rec.ktpId">
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.ktpId" v-else>
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/ktp/add', query: { ids: rec.id } }"
-                        ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.bpjsId" v-if="rec.bpjsId">
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.bpjsId" v-else>
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/bpjs/add', query: { ids: rec.id } }"
-                        ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.alergiId" v-if="rec.alergiId">
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.alergiId" v-else>
-                      <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/alergi/add', query: { ids: rec.id } }"
-                        ></vs-button>
+                    <vs-td :data="rec.pekerjaan">
+                      {{ rec.pekerjaan }}
                     </vs-td>
                     <vs-td class="crud-generated__button">
                       <badaso-dropdown vs-trigger-click>
@@ -236,7 +177,7 @@
                             :to="{
                               name: 'CrudGeneratedEdit',
                               params: {
-                                id: rec.id,
+                                id: rec.rfid,
                                 slug: $route.params.slug,
                               },
                             }"
@@ -251,21 +192,6 @@
                             icon="edit"
                           >
                             Edit
-                          </badaso-dropdown-item>
-                          <badaso-dropdown-item
-                            icon="delete"
-                            @click="confirmDelete(rec.id)"
-                            v-if="
-                              !idsOfflineDeleteRecord.includes(
-                                rec.id.toString()
-                              ) &&
-                              $helper.isAllowedToModifyGeneratedCRUD(
-                                'delete',
-                                dataType
-                              )
-                            "
-                          >
-                            Delete
                           </badaso-dropdown-item>
                           <badaso-dropdown-item
                             @click="confirmDeleteDataPending(rec.id)"

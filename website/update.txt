@@ -1,6 +1,4 @@
-💚 ci(language): change english to indonesian language
-💚 ci(table): make every "id" on table cannot be modified
-💚 ci(table): deleted alergi_id because its useless
-💚 ci(pasien): override pasien "add" pages, now can be edited outside badaso vendor
-💚 ci(pasien): override pasien "browser" pages, now can be edited outside badaso vendor
-💚 ci(pasien): override pasien "edit" pages, now can be edited outside badaso vendor
+💚 ci(ktp): override ktp "add" pages, now can be edited outside badaso vendor
+💚 ci(ktp): override ktp "browser" pages, now can be edited outside badaso vendor
+💚 ci(ktp): override ktp "edit" pages, now can be edited outside badaso vendor
+💚 ci(ktp): override add and edit ktp controller

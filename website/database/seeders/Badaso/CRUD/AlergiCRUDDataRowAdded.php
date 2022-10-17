@@ -43,7 +43,7 @@ class AlergiCRUDDataRowAdded extends Seeder
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'data',
-                    'type' => 'textarea',
+                    'type' => 'editor',
                     'display_name' => 'Data',
                     'required' => 0,
                     'browse' => 1,
@@ -51,7 +51,9 @@ class AlergiCRUDDataRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '{}',
+                    'details' => '{
+"size": "6"
+}',
                     'relation' => NULL,
                     'order' => 2,
                 ),

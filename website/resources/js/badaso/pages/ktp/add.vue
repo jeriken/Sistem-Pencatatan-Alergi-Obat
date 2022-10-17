@@ -3,7 +3,7 @@
     <template v-if="!isMaintenance">
       <badaso-breadcrumb-row full> </badaso-breadcrumb-row>
       <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('add', dataType)">
-        <vs-col vs-lg="6" class="pl-0 pt-0">
+        <vs-col vs-lg="12">
           <vs-card>
             <div slot="header">
               <h3>
@@ -19,87 +19,43 @@
                 <p class="is-error">No fields have been filled</p>
               </vs-col>
               <badaso-text
-                v-model="dataType.dataRows[4].value"
+                v-model="dataType.dataRows[1].value"
                 size="12"
-                :label="dataType.dataRows[4].displayName"
-                placeholder="Supriyati"
+                :label="dataType.dataRows[1].displayName"
+                placeholder="Scan KTP"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[4].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)
                   ]
                 "
               ></badaso-text>
-              <badaso-text
-                v-model="dataType.dataRows[5].value"
-                size="12"
-                :label="dataType.dataRows[5].displayName"
-                placeholder="Banjarnegara"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[5].field)
-                  ]
-                "
-              ></badaso-text>
-              <badaso-date
-                :label="dataType.dataRows[6].displayName"
-                :placeholder="dataType.dataRows[6].displayName"
-                v-model="dataType.dataRows[6].value"
-                size="12"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[6].field)
-                  ]
-                "
-              ></badaso-date>
-            </vs-row>
-          </vs-card>
-        </vs-col>
-        <vs-col vs-lg="6" class="pr-0">
-          <vs-card>
-            <div slot="header">
-              <h3></h3>
-            </div>
-            <vs-row>
-              <badaso-textarea
-                :label="dataType.dataRows[7].displayName"
-                placeholder="Wanayasa RT 02/01
-                Wanayasa
-                Banjarnegara"
-                v-model="dataType.dataRows[7].value"
-                size="12"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[7].field)
-                  ]
-                "
-              ></badaso-textarea>
               <badaso-select
-                :label="dataType.dataRows[8].displayName"
-                placeholder="Pilih golongan darah"
-                v-model="dataType.dataRows[8].value"
+                :label="dataType.dataRows[2].displayName"
+                placeholder="Pilih agama"
+                v-model="dataType.dataRows[2].value"
                 size="12"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[8].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)
                   ]
                 "
                 :items="
-                  dataType.dataRows[8].details.items
-                    ? dataType.dataRows[8].details.items
+                  dataType.dataRows[2].details.items
+                    ? dataType.dataRows[2].details.items
                     : []
                 "
               ></badaso-select>
-              <badaso-number
-                :label="dataType.dataRows[9].displayName"
-                placeholder="33041707XXXXXXXXXX"
-                v-model="dataType.dataRows[9].value"
+              <badaso-text
+                v-model="dataType.dataRows[3].value"
                 size="12"
+                :label="dataType.dataRows[3].displayName"
+                :placeholder="dataType.dataRows[3].displayName"
                 :alert="
                   errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[9].field)
+                    $caseConvert.stringSnakeToCamel(dataType.dataRows[3].field)
                   ]
                 "
-              ></badaso-number>
+              ></badaso-text>
             </vs-row>
           </vs-card>
         </vs-col>
@@ -198,6 +154,10 @@ export default {
         }
       }
 
+      dataRows.ids = this.$route.query.ids;
+
+      console.log(dataRows)
+
       // validate values in data rows must not equals 0
       if (Object.values(dataRows).length == 0) {
         this.isValid = false;
@@ -209,15 +169,13 @@ export default {
       this.$api.badasoEntity
         .add({
           slug: this.$route.params.slug,
+          ids: this.$route.query.ids,
           data: dataRows,
         })
         .then((response) => {
           this.$closeLoader();
           this.$router.push({
-            name: "CrudGeneratedBrowse",
-            params: {
-              slug: this.$route.params.slug,
-            },
+            path: "/dashboard/general/pasien",
           });
         })
         .catch((error) => {

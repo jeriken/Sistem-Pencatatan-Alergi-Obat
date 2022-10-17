@@ -36,7 +36,7 @@ class KtpCRUDDataTypeAdded extends Seeder
                 'icon' => 'fingerprint',
                 'model_name' => NULL,
                 'policy_name' => NULL,
-                'controller' => NULL,
+                'controller' => 'App\\Http\\Controllers\\KtpController',
                 'order_column' => NULL,
                 'order_display_column' => NULL,
                 'order_direction' => NULL,
@@ -48,7 +48,7 @@ class KtpCRUDDataTypeAdded extends Seeder
                 'notification' => '[]',
                 'is_soft_delete' => false,
                 'created_at' => '2022-10-14T08:39:42.000000Z',
-                'updated_at' => '2022-10-15T06:27:01.000000Z',
+                'updated_at' => '2022-10-16T04:23:44.000000Z',
             ));
 
             Badaso::model('Permission')->generateFor('ktp');
