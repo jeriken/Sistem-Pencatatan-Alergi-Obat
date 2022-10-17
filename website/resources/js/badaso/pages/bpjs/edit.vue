@@ -2,13 +2,13 @@
   <div>
     <template v-if="!isMaintenance">
       <badaso-breadcrumb-row full> </badaso-breadcrumb-row>
-      <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('add', dataType)">
+      <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('edit', dataType)">
         <vs-col vs-lg="12">
           <vs-card>
             <div slot="header">
               <h3>
                 {{
-                  $t("crudGenerated.add.title", {
+                  $t("crudGenerated.edit.title", {
                     tableName: dataType.displayNameSingular,
                   })
                 }}
@@ -18,7 +18,7 @@
               <vs-col vs-lg="12" v-if="!isValid">
                 <p class="is-error">No fields have been filled</p>
               </vs-col>
-              <badaso-text
+              <badaso-text disabled
                 v-model="dataType.dataRows[1].value"
                 size="12"
                 :label="dataType.dataRows[1].displayName"
@@ -29,9 +29,9 @@
                   ]
                 "
               ></badaso-text>
-              <badaso-select
+              <badaso-number
                 :label="dataType.dataRows[2].displayName"
-                placeholder="Pilih agama"
+                :placeholder="dataType.dataRows[2].displayName"
                 v-model="dataType.dataRows[2].value"
                 size="12"
                 :alert="
@@ -39,12 +39,7 @@
                     $caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)
                   ]
                 "
-                :items="
-                  dataType.dataRows[2].details.items
-                    ? dataType.dataRows[2].details.items
-                    : []
-                "
-              ></badaso-select>
+              ></badaso-number>
               <badaso-text
                 v-model="dataType.dataRows[3].value"
                 size="12"
@@ -65,11 +60,11 @@
               <vs-col vs-lg="12">
                 <vs-button color="primary" type="relief" @click="submitForm">
                   <vs-icon icon="save"></vs-icon>
-                  {{ $t("crudGenerated.add.button") }}
+                  {{ $t("crudGenerated.edit.button") }}
                 </vs-button>
                 <vs-button
                   :to="{
-                    name: 'DataPendingAddBrowse',
+                    name: 'DataPendingEditRead',
                     params: {
                       urlBase64: base64PathName,
                     },
@@ -79,9 +74,7 @@
                   type="relief"
                 >
                   <vs-icon icon="history"></vs-icon>
-                  <strong
-                    >{{ dataLength }} {{ $t("offlineFeature.dataPending") }}
-                  </strong>
+                  <strong>{{ $t("offlineFeature.dataUpdatePending") }}</strong>
                 </vs-button>
               </vs-col>
             </vs-row>
@@ -95,7 +88,7 @@
               <vs-col vs-lg="12">
                 <h3>
                   {{
-                    $t("crudGenerated.warning.notAllowedToAdd", {
+                    $t("crudGenerated.warning.notAllowedToEdit", {
                       tableName: dataType.displayNameSingular,
                     })
                   }}
@@ -109,7 +102,7 @@
     <template v-if="isMaintenance">
       <badaso-breadcrumb-row full> </badaso-breadcrumb-row>
 
-      <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('add', dataType)">
+      <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('edit', dataType)">
         <vs-col vs-lg="12">
           <div class="badaso-maintenance__container">
             <img :src="`${maintenanceImg}`" alt="Maintenance Icon" />
@@ -124,29 +117,29 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
+import * as _ from "lodash";
+
 export default {
-  name: "CrudGeneratedAdd",
+  name: "CrudGeneratedEdit",
   components: {},
   data: () => ({
     isValid: true,
     errors: {},
     dataType: {},
     relationData: {},
-    isMaintenance: false,
     dataLength: 0,
     pathname: location.pathname,
+    isMaintenance: false,
   }),
   mounted() {
-    this.getDataType();
+    this.getDetailEntity();
     this.getRelationDataBySlug();
     this.requestObjectStoreData();
   },
   methods: {
     submitForm() {
-      this.errors = {};
-      this.isValid = true;
-
-      // init data rows
+      // init data row
       const dataRows = {};
       for (const row of this.dataType.dataRows) {
         if (row && row.value) {
@@ -154,30 +147,29 @@ export default {
         }
       }
 
-      dataRows.ids = this.$route.query.ids;
-
       // validate values in data rows must not equals 0
       if (Object.values(dataRows).length == 0) {
         this.isValid = false;
         return;
       }
 
-      // start request
       this.$openLoader();
       this.$api.badasoEntity
-        .add({
+        .edit({
           slug: this.$route.params.slug,
           data: dataRows,
         })
         .then((response) => {
           this.$closeLoader();
           this.$router.push({
-            path: "/dashboard/general/pasien",
+            name: "CrudGeneratedBrowse",
+            params: {
+              slug: this.$route.params.slug,
+            },
           });
         })
         .catch((error) => {
           this.requestObjectStoreData();
-          this.errors = error.errors;
           this.$closeLoader();
           this.$vs.notify({
             title: this.$t("alert.danger"),
@@ -186,48 +178,82 @@ export default {
           });
         });
     },
-    async getDataType() {
+    async getDetailEntity() {
       this.$openLoader();
 
       try {
-        const response = await this.$api.badasoCrud.readBySlug({
+        const response = await this.$api.badasoEntity.read({
+          slug: this.$route.params.slug,
+          barcode: this.$route.params.id,
+        });
+
+        const {
+          data: { dataType },
+        } = await this.$api.badasoTable.getDataType({
           slug: this.$route.params.slug,
         });
 
         this.$closeLoader();
-        this.dataType = response.data.crudData;
-        const dataRows = response.data.crudData.dataRows.map((data) => {
-          if (
-            data.value == undefined &&
-            (data.type == "upload_image" || data.type == "upload_file")
-          ) {
-            data.value = "";
-          } else if (
-            data.value == undefined &&
-            (data.type == "upload_image_multiple" ||
-              data.type == "upload_file_multiple" ||
-              data.type == "select_multiple" ||
-              data.type == "checkbox")
-          ) {
-            data.value = Array;
-          } else if (data.value == undefined && data.type == "slider") {
-            data.value = 0;
-          } else if (data.value == undefined && data.type == "switch") {
-            data.value = false;
-          } else if (data.value == undefined && data.type == "tags") {
-            data.value = "";
-          } else if (data.value == undefined) {
-            data.value = "";
-          }
+
+        this.dataType = dataType;
+        this.record = response.data;
+        const dataRows = this.dataType.dataRows.map((data) => {
           try {
+            data.add = data.add == 1;
+            data.edit = data.edit == 1;
+            data.read = data.read == 1;
             data.details = JSON.parse(data.details);
-            if (data.type == "hidden") {
+
+            if (
+              data.type == "upload_image_multiple" ||
+              data.type == "upload_file_multiple" ||
+              data.type == "checkbox" ||
+              data.type == "select_multiple"
+            ) {
+              const val =
+                this.record[this.$caseConvert.stringSnakeToCamel(data.field)];
+              if (val) {
+                data.value = val.split(",");
+              }
+            } else if (data.type == "switch") {
+              data.value = this.record[
+                this.$caseConvert.stringSnakeToCamel(data.field)
+              ]
+                ? this.record[this.$caseConvert.stringSnakeToCamel(data.field)]
+                : false;
+            } else if (data.type == "slider") {
+              data.value = parseInt(
+                this.record[this.$caseConvert.stringSnakeToCamel(data.field)]
+              );
+            } else if (data.type == "datetime") {
+              data.value = this.record[
+                this.$caseConvert.stringSnakeToCamel(data.field)
+              ]
+                ? this.record[
+                    this.$caseConvert.stringSnakeToCamel(data.field)
+                  ].replace(" ", "T")
+                : null;
+            } else if (data.value == undefined && data.type == "hidden") {
               data.value = data.details.value ? data.details.value : "";
+            } else if (
+              data.type == "text" ||
+              data.type == "hidden" ||
+              data.type == "url" ||
+              data.type == "search" ||
+              data.type == "password"
+            ) {
+              data.value = this.record[
+                this.$caseConvert.stringSnakeToCamel(data.field)
+              ]
+                ? this.record[this.$caseConvert.stringSnakeToCamel(data.field)]
+                : "";
+            } else {
+              data.value =
+                this.record[this.$caseConvert.stringSnakeToCamel(data.field)];
             }
           } catch (error) {}
           return data;
         });
-        console.log(response.data.crudData.dataRows);
         this.dataType.dataRows = JSON.parse(JSON.stringify(dataRows));
       } catch (error) {
         if (error.status == 503) {

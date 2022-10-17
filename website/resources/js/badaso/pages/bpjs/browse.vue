@@ -44,6 +44,7 @@
           >
             {{ $t("action.sort") }}
           </badaso-dropdown-item>
+          
           <badaso-dropdown-item
             icon="restore"
             v-if="selected.length > 0 && isShowDataRecycle"
@@ -119,20 +120,19 @@
                 </template>
 
                 <template slot-scope="{ data }">
-                  
                   <vs-tr
                     :data="rec"
                     :key="index"
                     v-for="(rec, index) in records"
                   >
-                    <vs-td :data="rec.rfid">
-                      {{ rec.rfid }}
+                    <vs-td :data="rec.barcode">
+                      {{ rec.barcode }}
                     </vs-td>
-                    <vs-td :data="rec.agama">
-                      {{ rec.agama }}
+                    <vs-td :data="rec.nomor">
+                      {{ rec.nomor }}
                     </vs-td>
-                    <vs-td :data="rec.pekerjaan">
-                      {{ rec.pekerjaan }}
+                    <vs-td :data="rec.faskes">
+                      {{ rec.faskes }}
                     </vs-td>
                     <vs-td class="crud-generated__button">
                       <badaso-dropdown vs-trigger-click>
@@ -146,7 +146,7 @@
                             :to="{
                               name: 'CrudGeneratedRead',
                               params: {
-                                id: rec.rfid,
+                                id: rec.barcode,
                                 slug: $route.params.slug,
                               },
                             }"
@@ -166,7 +166,7 @@
                             :to="{
                               name: 'CrudGeneratedEdit',
                               params: {
-                                id: rec.rfid,
+                                id: rec.barcode,
                                 slug: $route.params.slug,
                               },
                             }"
@@ -277,7 +277,9 @@
                               v-else-if="
                                 dataRow.type == 'upload_image_multiple'
                               "
-                              class="crud-generated__item--upload-image-multiple"
+                              class="
+                                crud-generated__item--upload-image-multiple
+                              "
                             >
                               <img
                                 v-for="(image, indexImage) in stringToArray(
@@ -684,7 +686,7 @@ export default {
         this.$closeLoader();
         this.data = response.data;
         this.records = response.data.data;
-        console.log(this.records)
+        console.log(this.records);
         this.totalItem =
           response.data.total > 0
             ? Math.ceil(response.data.total / this.limit)

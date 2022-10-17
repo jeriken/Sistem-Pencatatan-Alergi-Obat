@@ -36,7 +36,7 @@ class BpjsCRUDDataTypeAdded extends Seeder
                 'icon' => 'attach_file',
                 'model_name' => NULL,
                 'policy_name' => NULL,
-                'controller' => NULL,
+                'controller' => 'App\\Http\\Controllers\\BpjsController',
                 'order_column' => NULL,
                 'order_display_column' => NULL,
                 'order_direction' => NULL,
@@ -48,7 +48,7 @@ class BpjsCRUDDataTypeAdded extends Seeder
                 'notification' => '[]',
                 'is_soft_delete' => false,
                 'created_at' => '2022-10-14T08:42:56.000000Z',
-                'updated_at' => '2022-10-15T06:27:23.000000Z',
+                'updated_at' => '2022-10-17T03:48:14.000000Z',
             ));
 
             Badaso::model('Permission')->generateFor('bpjs');

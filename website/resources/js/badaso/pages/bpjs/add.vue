@@ -22,16 +22,16 @@
                 v-model="dataType.dataRows[1].value"
                 size="12"
                 :label="dataType.dataRows[1].displayName"
-                placeholder="Scan KTP"
+                placeholder="Scan kartu BPJS"
                 :alert="
                   errors[
                     $caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)
                   ]
                 "
               ></badaso-text>
-              <badaso-select
+              <badaso-number
                 :label="dataType.dataRows[2].displayName"
-                placeholder="Pilih agama"
+                :placeholder="dataType.dataRows[2].displayName"
                 v-model="dataType.dataRows[2].value"
                 size="12"
                 :alert="
@@ -39,12 +39,7 @@
                     $caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)
                   ]
                 "
-                :items="
-                  dataType.dataRows[2].details.items
-                    ? dataType.dataRows[2].details.items
-                    : []
-                "
-              ></badaso-select>
+              ></badaso-number>
               <badaso-text
                 v-model="dataType.dataRows[3].value"
                 size="12"
@@ -155,6 +150,7 @@ export default {
       }
 
       dataRows.ids = this.$route.query.ids;
+
 
       // validate values in data rows must not equals 0
       if (Object.values(dataRows).length == 0) {

@@ -18,44 +18,17 @@
               <vs-col vs-lg="12" v-if="!isValid">
                 <p class="is-error">No fields have been filled</p>
               </vs-col>
-              <badaso-text
+              <badaso-textarea
                 v-model="dataType.dataRows[1].value"
                 size="12"
                 :label="dataType.dataRows[1].displayName"
-                placeholder="Scan KTP"
+                :placeholder="dataType.dataRows[1].displayName"
                 :alert="
                   errors[
                     $caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)
                   ]
                 "
-              ></badaso-text>
-              <badaso-select
-                :label="dataType.dataRows[2].displayName"
-                placeholder="Pilih agama"
-                v-model="dataType.dataRows[2].value"
-                size="12"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)
-                  ]
-                "
-                :items="
-                  dataType.dataRows[2].details.items
-                    ? dataType.dataRows[2].details.items
-                    : []
-                "
-              ></badaso-select>
-              <badaso-text
-                v-model="dataType.dataRows[3].value"
-                size="12"
-                :label="dataType.dataRows[3].displayName"
-                :placeholder="dataType.dataRows[3].displayName"
-                :alert="
-                  errors[
-                    $caseConvert.stringSnakeToCamel(dataType.dataRows[3].field)
-                  ]
-                "
-              ></badaso-text>
+              ></badaso-textarea>
             </vs-row>
           </vs-card>
         </vs-col>

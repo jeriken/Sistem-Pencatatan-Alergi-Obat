@@ -1,4 +1,11 @@
-💚 ci(ktp): override ktp "add" pages, now can be edited outside badaso vendor
-💚 ci(ktp): override ktp "browser" pages, now can be edited outside badaso vendor
-💚 ci(ktp): override ktp "edit" pages, now can be edited outside badaso vendor
-💚 ci(ktp): override add and edit ktp controller
+💚 ci(ktp): override ktp "read" pages, now can be edited outside badaso vendor
+💚 ci(bjps): override bjps "add" pages, now can be edited outside badaso vendor
+💚 ci(bjps): override bjps "read" pages, now can be edited outside badaso vendor
+💚 ci(bjps): override bjps "browse" pages, now can be edited outside badaso vendor
+💚 ci(bjps): override bjps "edit" pages, now can be edited outside badaso vendor
+💚 ci(bjps): override add and edit bjps controller, now can be edited outside badaso vendor
+💚 ci(alergi): override alergi "add" pages, now can be edited outside badaso vendor
+💚 ci(alergi): override alergi "read" pages, now can be edited outside badaso vendor
+💚 ci(alergi): override alergi "browse" pages, now can be edited outside badaso vendor
+💚 ci(alergi): override alergi "edit" pages, now can be edited outside badaso vendor
+💚 ci(alergi): override add and edit alergi controller, now can be edited outside badaso vendor

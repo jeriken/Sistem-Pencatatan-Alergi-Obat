@@ -36,7 +36,7 @@ class AlergiCRUDDataTypeAdded extends Seeder
                 'icon' => 'healing',
                 'model_name' => NULL,
                 'policy_name' => NULL,
-                'controller' => NULL,
+                'controller' => 'App\\Http\\Controllers\\AlergiController',
                 'order_column' => NULL,
                 'order_display_column' => NULL,
                 'order_direction' => NULL,
@@ -48,7 +48,7 @@ class AlergiCRUDDataTypeAdded extends Seeder
                 'notification' => '[]',
                 'is_soft_delete' => false,
                 'created_at' => '2022-10-15T08:38:20.000000Z',
-                'updated_at' => '2022-10-16T03:26:57.000000Z',
+                'updated_at' => '2022-10-17T05:04:37.000000Z',
             ));
 
             Badaso::model('Permission')->generateFor('alergi');

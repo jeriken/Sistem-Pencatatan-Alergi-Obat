@@ -135,7 +135,6 @@
                 </template>
 
                 <template slot-scope="{ data }">
-                  
                   <vs-tr
                     :data="rec"
                     :key="index"
@@ -158,51 +157,72 @@
                     </vs-td>
                     <vs-td :data="rec.ktpId" v-if="rec.ktpId">
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="check"
+                        :to="{
+                          path:
+                            '/dashboard/general/ktp/' + rec.ktpId,
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td :data="rec.ktpId" v-else>
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/ktp/add', query: { ids: rec.id } }"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="add"
+                        color="danger"
+                        :to="{
+                          path: '/dashboard/general/ktp/add',
+                          query: { ids: rec.id },
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td :data="rec.bpjsId" v-if="rec.bpjsId">
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="check"
+                        :to="{
+                          path:
+                            '/dashboard/general/bpjs/' + rec.bpjsId,
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td :data="rec.bpjsId" v-else>
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/bpjs/add', query: { ids: rec.id } }"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="add"
+                        color="danger"
+                        :to="{
+                          path: '/dashboard/general/bpjs/add',
+                          query: { ids: rec.id },
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td :data="rec.alergiId" v-if="rec.alergiId">
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="check"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="check"
+                        :to="{
+                          path:
+                            '/dashboard/general/alergi/' + rec.alergiId,
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td :data="rec.alergiId" v-else>
                       <vs-button
-                          size="large"
-                          type="flat"
-                          icon="add"
-                          color="danger"
-                          :to="{ path: '/dashboard/general/alergi/add', query: { ids: rec.id } }"
-                        ></vs-button>
+                        size="large"
+                        type="flat"
+                        icon="add"
+                        color="danger"
+                        :to="{
+                          path: '/dashboard/general/alergi/add',
+                          query: { ids: rec.id },
+                        }"
+                      ></vs-button>
                     </vs-td>
                     <vs-td class="crud-generated__button">
                       <badaso-dropdown vs-trigger-click>
@@ -362,7 +382,9 @@
                               v-else-if="
                                 dataRow.type == 'upload_image_multiple'
                               "
-                              class="crud-generated__item--upload-image-multiple"
+                              class="
+                                crud-generated__item--upload-image-multiple
+                              "
                             >
                               <img
                                 v-for="(image, indexImage) in stringToArray(
@@ -769,7 +791,7 @@ export default {
         this.$closeLoader();
         this.data = response.data;
         this.records = response.data.data;
-        console.log(this.records)
+        console.log(this.records);
         this.totalItem =
           response.data.total > 0
             ? Math.ceil(response.data.total / this.limit)
