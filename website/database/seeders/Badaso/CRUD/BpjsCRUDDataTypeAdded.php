@@ -28,7 +28,6 @@ class BpjsCRUDDataTypeAdded extends Seeder
             }
 
             \DB::table('badaso_data_types')->insert(array (
-                'id' => 2,
                 'name' => 'bpjs',
                 'slug' => 'bpjs',
                 'display_name_singular' => 'Bpjs',
@@ -42,13 +41,13 @@ class BpjsCRUDDataTypeAdded extends Seeder
                 'order_direction' => NULL,
                 'generate_permissions' => true,
                 'server_side' => false,
-                'is_maintenance' => 0,
                 'description' => NULL,
                 'details' => NULL,
                 'notification' => '[]',
                 'is_soft_delete' => false,
-                'created_at' => '2022-10-14T08:42:56.000000Z',
-                'updated_at' => '2022-10-17T03:48:14.000000Z',
+                'updated_at' => '2022-11-10T07:42:11.000000Z',
+                'created_at' => '2022-11-10T07:42:11.000000Z',
+                'id' => 9,
             ));
 
             Badaso::model('Permission')->generateFor('bpjs');

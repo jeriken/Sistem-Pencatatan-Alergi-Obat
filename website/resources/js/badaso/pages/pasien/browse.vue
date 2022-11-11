@@ -123,11 +123,13 @@
                 multiple
               >
                 <template slot="thead">
+                  <vs-th>{{ dataType.dataRows[15].displayName }}</vs-th>
+                  <vs-th>{{ dataType.dataRows[5].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[4].displayName }}</vs-th>
-                  <vs-th>Tempat, {{ dataType.dataRows[6].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[7].displayName }}</vs-th>
+                  <vs-th>Usia</vs-th>
+                  <vs-th>{{ dataType.dataRows[13].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[8].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[9].displayName }}</vs-th>
+                  <vs-th>{{ dataType.dataRows[14].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[2].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[3].displayName }}</vs-th>
@@ -140,20 +142,26 @@
                     :key="index"
                     v-for="(rec, index) in records"
                   >
+                    <vs-td :data="rec.tglCatat">
+                      {{ date(rec.tglCatat) }}
+                    </vs-td>
                     <vs-td :data="rec.nama">
                       {{ rec.nama }}
                     </vs-td>
-                    <vs-td :data="rec.tmpLahir">
-                      {{ rec.tmpLahir }}, {{ date(rec.tglLahir) }}
+                    <vs-td :data="rec.rs.nama">
+                      {{ rec.rs[0].nama }}
+                    </vs-td>
+                    <vs-td :data="rec.tglLahir">
+                      {{ usia(rec.tglLahir) }}
+                    </vs-td>
+                    <vs-td :data="rec.jenkel">
+                      {{ rec.jenkel }}
                     </vs-td>
                     <vs-td :data="rec.alamat">
                       {{ rec.alamat }}
                     </vs-td>
-                    <vs-td :data="rec.goldar">
-                      {{ rec.goldar }}
-                    </vs-td>
-                    <vs-td :data="rec.nik">
-                      {{ rec.nik }}
+                    <vs-td :data="rec.keterangan">
+                      {{ rec.keterangan }}
                     </vs-td>
                     <vs-td :data="rec.ktpId" v-if="rec.ktpId">
                       <vs-button
@@ -161,8 +169,7 @@
                         type="flat"
                         icon="check"
                         :to="{
-                          path:
-                            '/dashboard/general/ktp/' + rec.ktpId,
+                          path: '/dashboard/general/ktp/' + rec.ktpId,
                         }"
                       ></vs-button>
                     </vs-td>
@@ -184,8 +191,7 @@
                         type="flat"
                         icon="check"
                         :to="{
-                          path:
-                            '/dashboard/general/bpjs/' + rec.bpjsId,
+                          path: '/dashboard/general/bpjs/' + rec.bpjsId,
                         }"
                       ></vs-button>
                     </vs-td>
@@ -207,8 +213,7 @@
                         type="flat"
                         icon="check"
                         :to="{
-                          path:
-                            '/dashboard/general/alergi/' + rec.alergiId,
+                          path: '/dashboard/general/alergi/' + rec.alergiId,
                         }"
                       ></vs-button>
                     </vs-td>
@@ -716,11 +721,24 @@ export default {
     this.loadIdsOfflineDelete();
   },
   methods: {
+    usia(date) {
+      var dateNew = new Date().getFullYear();
+      date = date.slice(0, 4);
+      return dateNew - date;
+    },
+    nik(nik) {
+      nik = new String(nik).substring(0, 6);
+      if (nik == 0) {
+        return "-";
+      } else {
+        return nik + "XXXXXXXXXX";
+      }
+    },
     date(date) {
       var dateNew = new Date(date);
       return new Intl.DateTimeFormat("id-ID", {
         day: "2-digit",
-        month: "long",
+        month: "short",
         year: "numeric",
       }).format(dateNew);
     },

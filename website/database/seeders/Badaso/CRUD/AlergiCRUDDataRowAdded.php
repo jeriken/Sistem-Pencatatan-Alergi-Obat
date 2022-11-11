@@ -51,7 +51,7 @@ class AlergiCRUDDataRowAdded extends Seeder
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
-                    'details' => '',
+                    'details' => '{}',
                     'relation' => NULL,
                     'order' => 2,
                 ),

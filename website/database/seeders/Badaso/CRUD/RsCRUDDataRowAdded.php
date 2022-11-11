@@ -5,7 +5,7 @@ namespace Database\Seeders\Badaso\CRUD;
 use Illuminate\Database\Seeder;
 use Uasoft\Badaso\Facades\Badaso;
 
-class BpjsCRUDDataRowAdded extends Seeder
+class RsCRUDDataRowAdded extends Seeder
 {
     /**
      * Auto generated seed file
@@ -20,7 +20,7 @@ class BpjsCRUDDataRowAdded extends Seeder
 
         try {
 
-            $data_type = Badaso::model('DataType')::where('name', 'bpjs')->first();
+            $data_type = Badaso::model('DataType')::where('name', 'rs')->first();
 
             \DB::table('badaso_data_rows')->insert(array (
                 0 => 
@@ -28,7 +28,7 @@ class BpjsCRUDDataRowAdded extends Seeder
                     'data_type_id' => $data_type->id,
                     'field' => 'id',
                     'type' => 'number',
-                    'display_name' => 'ID',
+                    'display_name' => 'Id',
                     'required' => 1,
                     'browse' => 0,
                     'read' => 1,
@@ -42,9 +42,9 @@ class BpjsCRUDDataRowAdded extends Seeder
                 1 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'barcode',
+                    'field' => 'nama',
                     'type' => 'text',
-                    'display_name' => 'Barcode',
+                    'display_name' => 'Nama',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -58,10 +58,10 @@ class BpjsCRUDDataRowAdded extends Seeder
                 2 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'nomor',
-                    'type' => 'number',
-                    'display_name' => 'Nomor Kartu',
-                    'required' => 1,
+                    'field' => 'alamat',
+                    'type' => 'textarea',
+                    'display_name' => 'Alamat',
+                    'required' => 0,
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
@@ -74,10 +74,10 @@ class BpjsCRUDDataRowAdded extends Seeder
                 3 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'faskes',
+                    'field' => 'telepon',
                     'type' => 'text',
-                    'display_name' => 'Fasilitas Kesehatan',
-                    'required' => 1,
+                    'display_name' => 'Telepon',
+                    'required' => 0,
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
@@ -88,6 +88,22 @@ class BpjsCRUDDataRowAdded extends Seeder
                     'order' => 4,
                 ),
                 4 => 
+                array (
+                    'data_type_id' => $data_type->id,
+                    'field' => 'provinsi',
+                    'type' => 'text',
+                    'display_name' => 'Provinsi',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'relation' => NULL,
+                    'order' => 5,
+                ),
+                5 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'created_at',
@@ -101,9 +117,9 @@ class BpjsCRUDDataRowAdded extends Seeder
                     'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 5,
+                    'order' => 6,
                 ),
-                5 => 
+                6 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'updated_at',
@@ -117,7 +133,7 @@ class BpjsCRUDDataRowAdded extends Seeder
                     'delete' => 0,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 6,
+                    'order' => 7,
                 ),
             ));
 

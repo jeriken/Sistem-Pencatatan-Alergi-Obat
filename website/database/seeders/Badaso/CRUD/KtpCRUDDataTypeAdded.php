@@ -28,7 +28,6 @@ class KtpCRUDDataTypeAdded extends Seeder
             }
 
             \DB::table('badaso_data_types')->insert(array (
-                'id' => 1,
                 'name' => 'ktp',
                 'slug' => 'ktp',
                 'display_name_singular' => 'Ktp',
@@ -42,13 +41,13 @@ class KtpCRUDDataTypeAdded extends Seeder
                 'order_direction' => NULL,
                 'generate_permissions' => true,
                 'server_side' => false,
-                'is_maintenance' => 0,
                 'description' => NULL,
                 'details' => NULL,
                 'notification' => '[]',
                 'is_soft_delete' => false,
-                'created_at' => '2022-10-14T08:39:42.000000Z',
-                'updated_at' => '2022-10-16T04:23:44.000000Z',
+                'updated_at' => '2022-11-10T07:44:53.000000Z',
+                'created_at' => '2022-11-10T07:44:53.000000Z',
+                'id' => 10,
             ));
 
             Badaso::model('Permission')->generateFor('ktp');

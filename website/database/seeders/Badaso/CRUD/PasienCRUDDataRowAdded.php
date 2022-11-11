@@ -30,11 +30,11 @@ class PasienCRUDDataRowAdded extends Seeder
                     'type' => 'number',
                     'display_name' => 'ID',
                     'required' => 1,
-                    'browse' => 0,
+                    'browse' => 1,
                     'read' => 1,
-                    'edit' => 0,
-                    'add' => 0,
-                    'delete' => 0,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
                     'details' => '{}',
                     'relation' => NULL,
                     'order' => 1,
@@ -52,7 +52,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"belongs_to","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
+                    'relation' => '{"relation_type":"has_one","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
                     'order' => 2,
                 ),
                 2 => 
@@ -68,7 +68,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"belongs_to","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"barcode"}',
+                    'relation' => '{"relation_type":"has_one","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"nomor"}',
                     'order' => 3,
                 ),
                 3 => 
@@ -84,31 +84,31 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"belongs_to","destination_table":"alergi","destination_table_column":"id","destination_table_display_column":"data"}',
+                    'relation' => '{"relation_type":"has_one","destination_table":"alergi","destination_table_column":"id","destination_table_display_column":"data"}',
                     'order' => 4,
                 ),
                 4 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'nama',
-                    'type' => 'text',
-                    'display_name' => 'Nama lengkap',
-                    'required' => 1,
+                    'field' => 'rs_id',
+                    'type' => 'relation',
+                    'display_name' => 'Rumah Sakit',
+                    'required' => 0,
                     'browse' => 1,
                     'read' => 1,
                     'edit' => 1,
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => NULL,
+                    'relation' => '{"relation_type":"has_many","destination_table":"rs","destination_table_column":"id","destination_table_display_column":"nama"}',
                     'order' => 5,
                 ),
                 5 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'tmp_lahir',
+                    'field' => 'nama',
                     'type' => 'text',
-                    'display_name' => 'Tempat lahir',
+                    'display_name' => 'Nama Lengkap',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -122,9 +122,9 @@ class PasienCRUDDataRowAdded extends Seeder
                 6 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'tgl_lahir',
-                    'type' => 'date',
-                    'display_name' => 'Tanggal lahir',
+                    'field' => 'tmp_lahir',
+                    'type' => 'text',
+                    'display_name' => 'Tempat Lahir',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -138,9 +138,9 @@ class PasienCRUDDataRowAdded extends Seeder
                 7 => 
                 array (
                     'data_type_id' => $data_type->id,
-                    'field' => 'alamat',
-                    'type' => 'textarea',
-                    'display_name' => 'Alamat',
+                    'field' => 'tgl_lahir',
+                    'type' => 'date',
+                    'display_name' => 'Tanggal Lahir',
                     'required' => 1,
                     'browse' => 1,
                     'read' => 1,
@@ -154,9 +154,25 @@ class PasienCRUDDataRowAdded extends Seeder
                 8 => 
                 array (
                     'data_type_id' => $data_type->id,
+                    'field' => 'alamat',
+                    'type' => 'textarea',
+                    'display_name' => 'Alamat',
+                    'required' => 1,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'relation' => NULL,
+                    'order' => 9,
+                ),
+                9 => 
+                array (
+                    'data_type_id' => $data_type->id,
                     'field' => 'goldar',
-                    'type' => 'select',
-                    'display_name' => 'Golongan darah',
+                    'type' => 'text',
+                    'display_name' => 'Golongan Darah',
                     'required' => 0,
                     'browse' => 1,
                     'read' => 1,
@@ -188,9 +204,9 @@ class PasienCRUDDataRowAdded extends Seeder
 ]
 }',
                     'relation' => NULL,
-                    'order' => 9,
+                    'order' => 10,
                 ),
-                9 => 
+                10 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'nik',
@@ -204,32 +220,16 @@ class PasienCRUDDataRowAdded extends Seeder
                     'delete' => 1,
                     'details' => '{}',
                     'relation' => NULL,
-                    'order' => 10,
+                    'order' => 11,
                 ),
-                10 => 
+                11 => 
                 array (
                     'data_type_id' => $data_type->id,
                     'field' => 'created_at',
                     'type' => 'datetime',
                     'display_name' => 'Created At',
                     'required' => 0,
-                    'browse' => 0,
-                    'read' => 1,
-                    'edit' => 0,
-                    'add' => 0,
-                    'delete' => 0,
-                    'details' => '{}',
-                    'relation' => NULL,
-                    'order' => 11,
-                ),
-                11 => 
-                array (
-                    'data_type_id' => $data_type->id,
-                    'field' => 'updated_at',
-                    'type' => 'datetime',
-                    'display_name' => 'Updated At',
-                    'required' => 0,
-                    'browse' => 0,
+                    'browse' => 1,
                     'read' => 1,
                     'edit' => 0,
                     'add' => 0,
@@ -237,6 +237,81 @@ class PasienCRUDDataRowAdded extends Seeder
                     'details' => '{}',
                     'relation' => NULL,
                     'order' => 12,
+                ),
+                12 => 
+                array (
+                    'data_type_id' => $data_type->id,
+                    'field' => 'updated_at',
+                    'type' => 'datetime',
+                    'display_name' => 'Updated At',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 0,
+                    'add' => 0,
+                    'delete' => 0,
+                    'details' => '{}',
+                    'relation' => NULL,
+                    'order' => 13,
+                ),
+                13 => 
+                array (
+                    'data_type_id' => $data_type->id,
+                    'field' => 'jenkel',
+                    'type' => 'select',
+                    'display_name' => 'Jenis Kelamin',
+                    'required' => 1,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{
+"items": [
+{
+"label": "Laki-laki",
+"value": "Laki-laki"
+},
+{
+"label": "Perempuan",
+"value": "Perempuan"
+}
+]
+}',
+                    'relation' => NULL,
+                    'order' => 14,
+                ),
+                14 => 
+                array (
+                    'data_type_id' => $data_type->id,
+                    'field' => 'keterangan',
+                    'type' => 'textarea',
+                    'display_name' => 'Keterangan',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'relation' => NULL,
+                    'order' => 15,
+                ),
+                15 => 
+                array (
+                    'data_type_id' => $data_type->id,
+                    'field' => 'tgl_catat',
+                    'type' => 'date',
+                    'display_name' => 'Tanggal Catat',
+                    'required' => 0,
+                    'browse' => 1,
+                    'read' => 1,
+                    'edit' => 1,
+                    'add' => 1,
+                    'delete' => 1,
+                    'details' => '{}',
+                    'relation' => NULL,
+                    'order' => 16,
                 ),
             ));
 

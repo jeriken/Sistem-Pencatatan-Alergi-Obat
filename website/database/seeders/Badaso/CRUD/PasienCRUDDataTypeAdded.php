@@ -28,7 +28,6 @@ class PasienCRUDDataTypeAdded extends Seeder
             }
 
             \DB::table('badaso_data_types')->insert(array (
-                'id' => 6,
                 'name' => 'pasien',
                 'slug' => 'pasien',
                 'display_name_singular' => 'Pasien',
@@ -42,13 +41,13 @@ class PasienCRUDDataTypeAdded extends Seeder
                 'order_direction' => NULL,
                 'generate_permissions' => true,
                 'server_side' => false,
-                'is_maintenance' => 0,
                 'description' => NULL,
                 'details' => NULL,
                 'notification' => '[]',
                 'is_soft_delete' => false,
-                'created_at' => '2022-10-15T08:41:49.000000Z',
-                'updated_at' => '2022-10-16T02:49:08.000000Z',
+                'updated_at' => '2022-11-10T23:31:56.000000Z',
+                'created_at' => '2022-11-10T23:31:56.000000Z',
+                'id' => 12,
             ));
 
             Badaso::model('Permission')->generateFor('pasien');

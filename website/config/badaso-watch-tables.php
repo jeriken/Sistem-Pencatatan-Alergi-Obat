@@ -5,4 +5,5 @@ return [
     'bpjs',
     'ktp',
     'pasien',
+    'rs',
 ];
