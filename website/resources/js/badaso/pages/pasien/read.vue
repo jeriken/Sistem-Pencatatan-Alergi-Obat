@@ -40,13 +40,13 @@
                     </tr>
                     <tr>
                       <td class="badaso-table__label">
-                        {{ dataType.dataRows[4].displayName }}
+                        {{ dataType.dataRows[5].displayName }}
                       </td>
                       <td class="badaso-table__value">{{ record.nama }}</td>
                     </tr>
                     <tr>
                       <td class="badaso-table__label">
-                        Tempat, {{ dataType.dataRows[6].displayName }}
+                        Tempat, {{ dataType.dataRows[7].displayName }}
                       </td>
                       <td class="badaso-table__value">
                         {{ record.tmpLahir }}, {{ date(record.tglLahir) }}
@@ -54,7 +54,7 @@
                     </tr>
                     <tr>
                       <td class="badaso-table__label">
-                        {{ dataType.dataRows[7].displayName }}
+                        {{ dataType.dataRows[8].displayName }}
                       </td>
                       <td class="badaso-table__value">
                         <span>{{ record.alamat }}</span>
@@ -62,7 +62,7 @@
                     </tr>
                     <tr>
                       <td class="badaso-table__label">
-                        {{ dataType.dataRows[8].displayName }}
+                        {{ dataType.dataRows[9].displayName }}
                       </td>
                       <td class="badaso-table__value">
                         <span>{{ record.goldar }}</span>
@@ -70,7 +70,7 @@
                     </tr>
                     <tr>
                       <td class="badaso-table__label">
-                        {{ dataType.dataRows[9].displayName }}
+                        {{ dataType.dataRows[10].displayName }}
                       </td>
                       <td class="badaso-table__value">
                         <span>{{ record.nik }}</span>

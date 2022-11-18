@@ -1,7 +1,13 @@
-✨ feat(table): create "rs" table
-✨ feat(table): adding new relation "rs_id" on pasien table
-✨ feat(table): adding new attribute "jenkel, tgl_catat, and keterangan" on pasien table
-⚡️ perf(table): change to a specific length data on all database table
-✨ feat(rs): create crud for rs table
-✨ feat(pasien): adding new type of data "rumah sakit, jenis kelamin, tanggal catat, dan keterangan" on pasien pages
-🐛 fix(pasien): change pasien add and edit pages more responsive
+🐛 fix(pasien): fix datatable bug on pasien browse pages
+🐛 fix(alergi): fix datatable bug on alergi browse pages
+🐛 fix(ktp): fix datatable bug on ktp browse pages
+🐛 fix(bpjs): fix datatable bug on bpjs browse pages
+💚 ci(dashboard): override dashboard pages, now can be edited outside badaso vendor
+✨ feat(pasien): create model for pasien table
+✨ feat(ktp): create model for ktp table
+✨ feat(bpjs): create model for bpjs table
+✨ feat(alergi): create model for alergi table
+✨ feat(rs): create model for rs table
+✨ feat(api): create custom search API for mobile app
+✨ feat(api): create custom browse API for mobile app
+✨ feat(api): create custom dashboard API for homepage

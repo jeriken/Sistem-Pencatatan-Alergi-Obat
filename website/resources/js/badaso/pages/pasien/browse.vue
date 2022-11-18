@@ -123,24 +123,23 @@
                 multiple
               >
                 <template slot="thead">
-                  <vs-th>{{ dataType.dataRows[15].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[5].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[4].displayName }}</vs-th>
-                  <vs-th>Usia</vs-th>
-                  <vs-th>{{ dataType.dataRows[13].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[8].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[14].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[15].field)">{{ dataType.dataRows[15].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[5].field)">{{ dataType.dataRows[5].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[4].field)">{{ dataType.dataRows[4].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[7].field)">Usia</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[13].field)">{{ dataType.dataRows[13].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[8].field)">{{ dataType.dataRows[8].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[14].field)">{{ dataType.dataRows[14].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[2].displayName }}</vs-th>
                   <vs-th>{{ dataType.dataRows[3].displayName }}</vs-th>
                   <vs-th> {{ $t("crudGenerated.header.action") }} </vs-th>
                 </template>
-
                 <template slot-scope="{ data }">
                   <vs-tr
                     :data="rec"
                     :key="index"
-                    v-for="(rec, index) in records"
+                    v-for="(rec, index) in data"
                   >
                     <vs-td :data="rec.tglCatat">
                       {{ date(rec.tglCatat) }}
@@ -809,7 +808,6 @@ export default {
         this.$closeLoader();
         this.data = response.data;
         this.records = response.data.data;
-        console.log(this.records);
         this.totalItem =
           response.data.total > 0
             ? Math.ceil(response.data.total / this.limit)

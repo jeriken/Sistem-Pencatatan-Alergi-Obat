@@ -52,7 +52,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"ktp","destination_table_column":"rfid","destination_table_display_column":"rfid"}',
                     'order' => 2,
                 ),
                 2 => 
@@ -68,7 +68,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"nomor"}',
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"bpjs","destination_table_column":"barcode","destination_table_display_column":"nomor"}',
                     'order' => 3,
                 ),
                 3 => 
@@ -84,7 +84,7 @@ class PasienCRUDDataRowAdded extends Seeder
                     'add' => 1,
                     'delete' => 1,
                     'details' => '{}',
-                    'relation' => '{"relation_type":"has_one","destination_table":"alergi","destination_table_column":"id","destination_table_display_column":"data"}',
+                    'relation' => '{"relation_type":"belongs_to","destination_table":"alergi","destination_table_column":"id","destination_table_display_column":"data"}',
                     'order' => 4,
                 ),
                 4 => 

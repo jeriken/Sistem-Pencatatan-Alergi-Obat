@@ -113,8 +113,8 @@
                 multiple
               >
                 <template slot="thead">
-                  <vs-th>{{ dataType.dataRows[0].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[0].field)">{{ dataType.dataRows[0].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)">{{ dataType.dataRows[1].displayName }}</vs-th>
                   <vs-th> {{ $t("crudGenerated.header.action") }} </vs-th>
                 </template>
 
@@ -122,7 +122,7 @@
                   <vs-tr
                     :data="rec"
                     :key="index"
-                    v-for="(rec, index) in records"
+                    v-for="(rec, index) in data"
                   >
                     <vs-td :data="rec.id">
                       {{ rec.id }}

@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Str;
+use Uasoft\Badaso\Facades\Badaso;
+use Uasoft\Badaso\Middleware\ApiRequest;
+use Uasoft\Badaso\Middleware\BadasoAuthenticate;
+use Uasoft\Badaso\Middleware\BadasoCheckPermissions;
+use Uasoft\Badaso\Middleware\BadasoCheckPermissionsForCRUD;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'badaso.', 'middleware' => [ApiRequest::class]], function () {
+    Route::group(['prefix' => 'v1'], function () {
+        Route::group(['prefix' => 'custom'], function () {
+            Route::get('/dashboard', 'CustomController@dashboard')->middleware(BadasoCheckPermissions::class.':custom_dashboard');
+            Route::get('/browse', 'CustomController@browsePasien')->middleware(BadasoCheckPermissions::class.':custom_pasien_browse');
+            Route::get('/search', 'CustomController@searchPasien')->middleware(BadasoCheckPermissions::class.':custom_pasien_search');
+        });
+    });
 });

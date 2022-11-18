@@ -112,9 +112,9 @@
                 multiple
               >
                 <template slot="thead">
-                  <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[2].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[3].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[1].field)">{{ dataType.dataRows[1].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[2].field)">{{ dataType.dataRows[2].displayName }}</vs-th>
+                  <vs-th :sort-key="$caseConvert.stringSnakeToCamel(dataType.dataRows[3].field)">{{ dataType.dataRows[3].displayName }}</vs-th>
                   <vs-th> {{ $t("crudGenerated.header.action") }} </vs-th>
                 </template>
 
