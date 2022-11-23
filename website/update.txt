@@ -1,13 +1,1 @@
-🐛 fix(pasien): fix datatable bug on pasien browse pages
-🐛 fix(alergi): fix datatable bug on alergi browse pages
-🐛 fix(ktp): fix datatable bug on ktp browse pages
-🐛 fix(bpjs): fix datatable bug on bpjs browse pages
-💚 ci(dashboard): override dashboard pages, now can be edited outside badaso vendor
-✨ feat(pasien): create model for pasien table
-✨ feat(ktp): create model for ktp table
-✨ feat(bpjs): create model for bpjs table
-✨ feat(alergi): create model for alergi table
-✨ feat(rs): create model for rs table
-✨ feat(api): create custom search API for mobile app
-✨ feat(api): create custom browse API for mobile app
-✨ feat(api): create custom dashboard API for homepage
+⚡️  perf(laravel): change homepage to "/dashboard"

@@ -1,0 +1,3 @@
+👷 build(flutter): install flutter core
+👷 build(flutter): install getx cli
+👷 build(flutter): install initial getx pattern

@@ -7,7 +7,7 @@ const prefix = process.env.MIX_ADMIN_PANEL_ROUTE_PREFIX
 export default [
   {
     path: prefix + "/home",
-    name: "HomeCustom",
+    name: "HomePage",
     component: Home,
     meta: {
       title: "Home",
