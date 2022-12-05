@@ -1,3 +1,11 @@
-👷 build(flutter): install flutter core
-👷 build(flutter): install getx cli
-👷 build(flutter): install initial getx pattern
+💚 ci(mobile-login): create "login" module page
+💚 ci(mobile-scan): create "scan" module page
+💚 ci(mobile-login): create AuthModel for user auth API
+💚 ci(mobile-home): create DashboardModel for homepage API
+💚 ci(mobile-home): create PasienModel for custom search API
+💚 ci(mobile-app): create App repository to save all app settings
+💚 ci(mobile-app): create Auth repository to save user data
+💚 ci(mobile-app): create consts util to help basic settings
+✨ feat(mobile-login): modified login module, now user can login
+✨ feat(mobile-home): modified home module, now user can scan Barcode and NFC to see pasien data
+✨ feat(mobile-scan): modified scan module, now user can see Barcode and NFC data

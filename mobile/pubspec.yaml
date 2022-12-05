@@ -8,6 +8,9 @@ environment:
 dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.5
+  get_storage: 2.0.3
+  flutter_barcode_scanner: ^2.0.0
+  nfc_manager: ^3.2.0
   flutter: 
     sdk: flutter
 
