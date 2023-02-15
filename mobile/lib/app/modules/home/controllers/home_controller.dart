@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,9 +49,15 @@ class HomeController extends GetxController with StateMixin {
     app!.changeIsLogged(false);
     auth!.changeAccessToken("");
     auth!.changeUserName("");
+    auth!.changeUserEmail("");
+    auth!.changeUserAvatar("");
 
     await Get.offAllNamed(Routes.LOGIN);
   }
+
+  getName() => auth!.dataUserName();
+  getEmail() => auth!.dataUserEmail();
+  getAvatar() => auth!.dataUserAvatar();
 
   // isNfcAvailable() async {
   //   bool isAvailable = await NfcManager.instance.isAvailable();
@@ -57,15 +65,38 @@ class HomeController extends GetxController with StateMixin {
   //   return isAvailable.toString();
   // }
 
-  void scanNfc() {
+  void scanNfc() async {
     ValueNotifier<dynamic> result = ValueNotifier(null);
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable == false) {
+      change("Device tidak mendukung",
+          status: RxStatus.error("Device tidak memiliki fitur NFC"));
+      showSnackbar("Terdapat kesalahan");
+    }
+    String datanfc;
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       result.value = tag.data;
-      final data = await repository.getSearch(result.value);
-      if (data.errors == null) {
-        change(data, status: RxStatus.success());
+      print(result.value);
+      if (result.value['nfca'] != null) {
+        datanfc = jsonEncode(result.value['nfca']['identifier']);
+      } else if (result.value['nfcb'] != null) {
+        datanfc = jsonEncode(result.value['nfcb']['applicationData']);
       } else {
-        change(data, status: RxStatus.error(data.message));
+        datanfc = "Data tidak cocok";
+      }
+      final data = await repository.getSearch(datanfc);
+      if (data.data != null && data.data.alergi == null) {
+        change(data, status: RxStatus.error("Pasien tidak memiliki alergi"));
+        showSnackbar("Terdapat kesalahan");
+      } else if (data.data == null) {
+        change(data, status: RxStatus.error("Pasien tidak terdaftar"));
+        showSnackbar("Terdapat kesalahan");
+      } else if (data.data != null) {
+        change(data, status: RxStatus.success());
+        showSnackbar("Berhasil");
+      } else {
+        change(data.message, status: RxStatus.error(data.message));
+        showSnackbar("Terdapat kesalahan");
       }
       NfcManager.instance.stopSession();
     });
@@ -79,10 +110,18 @@ class HomeController extends GetxController with StateMixin {
       print(barcodeScanRes);
       if (barcodeScanRes != "-1") {
         final data = await repository.getSearch(barcodeScanRes);
-        if (data.errors == null) {
+        if (data.data != null && data.data.alergi == null) {
+          change(data, status: RxStatus.error("Pasien tidak memiliki alergi"));
+          showSnackbar("Terdapat kesalahan");
+        } else if (data.data == null) {
+          change(data, status: RxStatus.error("Pasien tidak terdaftar"));
+          showSnackbar("Terdapat kesalahan");
+        } else if (data.data != null) {
           change(data, status: RxStatus.success());
+          showSnackbar("Berhasil");
         } else {
-          change(data, status: RxStatus.error(data.message));
+          change(data.message, status: RxStatus.error(data.message));
+          showSnackbar("Terdapat kesalahan");
         }
       }
     } on PlatformException {
@@ -98,4 +137,11 @@ class HomeController extends GetxController with StateMixin {
   //     change(data, status: RxStatus.error(data.message));
   //   }
   // }
+
+  SnackbarController showSnackbar(message) {
+    return Get.showSnackbar(GetSnackBar(
+      message: message,
+      duration: const Duration(seconds: 3),
+    ));
+  }
 }

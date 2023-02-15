@@ -14,6 +14,6 @@ class KtpModel extends Model
     public $timestamps = false;
 
     public function pasien(){
-        return $this->hasOne(PasienModel::class, 'ktp_id');
+        return $this->hasOne(PasienModel::class, 'ktp_id', 'rfid');
     }
 }

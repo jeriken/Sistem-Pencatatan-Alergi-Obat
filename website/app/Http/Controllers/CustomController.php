@@ -11,6 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Uasoft\Badaso\Helpers\ApiResponse;
+use Illuminate\Support\Facades\Crypt;
 
 class CustomController extends Controller
 {
@@ -18,13 +19,64 @@ class CustomController extends Controller
     {
         try {
             $data = PasienModel::with(['rs', 'ktp', 'bpjs', 'alergi'])
-            ->where(function($query) use ($request) {
-                $query->where('nama', 'LIKE', '%' . $request->get('q') . '%')
-                    ->orWhere('ktp_id', $request->get('q'))
-                    ->orWhere('bpjs_id', $request->get('q'))
-                    ->orWhere('nik', $request->get('q'));
-            })
-            ->paginate(10);
+                ->where(function ($query) use ($request) {
+                    $query->where('nama', $request->get('q'))
+                        ->orWhere('ktp_id', $request->get('q'))
+                        ->orWhere('bpjs_id', $request->get('q'))
+                        ->orWhere('nik', $request->get('q'));
+                })
+                ->paginate(10);
+            return ApiResponse::onlyEntity($data);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return ApiResponse::failed($e);
+        }
+    }
+
+    public function filterPasien(Request $request)
+    {
+        try {
+            $data = new PasienModel;
+            $data = $data->with(['rs', 'ktp', 'bpjs', 'alergi']);
+            if ($request->has('q')) {
+                $data = $data->where(function ($query) use ($request) {
+                    $query->where('nama', $request->get('q'))
+                        ->orWhere('ktp_id', $request->get('q'))
+                        ->orWhere('bpjs_id', $request->get('q'));
+                });
+            }
+            if ($request->has('rsid')) {
+                $data = $data->where('rs_id', $request->get('rsid'));
+            }
+            if ($request->has('jk')) {
+                $data = $data->where('jenkel', $request->get('jk'));
+            }
+            if ($request->has('catat')) {
+                $data = $data->whereYear('tgl_catat', '=', $request->get('catat'));
+            }
+            if ($request->has('min')) {
+                $data = $data->whereYear('tgl_lahir', '<=', date("Y") - $request->get('min'));
+            }
+            if ($request->has('max')) {
+                $data = $data->whereYear('tgl_lahir', '>=', date("Y") - $request->get('max'));
+            }
+
+            $data = $data->paginate(100);
+            // print_r($data[0]->tgl_lahir);
+            foreach ($data as $decy) {
+                if (isset($decy->alamat)) {
+                    $decy->alamat = Crypt::decryptString($decy->alamat);
+                }
+                if (isset($decy->nik)) {
+                    $decy->nik = Crypt::decryptString($decy->nik);
+                }
+                if (isset($decy->keterangan)) {
+                    $decy->keterangan = Crypt::decryptString($decy->keterangan);
+                }
+                if (isset($decy->alergi)) {
+                    $decy->alergi->data = Crypt::decryptString($decy->alergi->data);
+                }
+            }
             return ApiResponse::onlyEntity($data);
         } catch (Exception $e) {
             DB::rollBack();
@@ -36,13 +88,13 @@ class CustomController extends Controller
     {
         try {
             $data = PasienModel::with(['rs', 'ktp', 'bpjs', 'alergi'])
-            ->where(function($query) use ($request) {
-                $query->where('nama', 'LIKE', '%' . $request->get('q') . '%')
-                    ->orWhere('ktp_id', $request->get('q'))
-                    ->orWhere('bpjs_id', $request->get('q'))
-                    ->orWhere('nik', $request->get('q'));
-            })
-            ->first();
+                ->where(function ($query) use ($request) {
+                    $query->where('nama', $request->get('q'))
+                        ->orWhere('ktp_id', $request->get('q'))
+                        ->orWhere('bpjs_id', $request->get('q'))
+                        ->orWhere('nik', $request->get('q'));
+                })
+                ->first();
             return ApiResponse::onlyEntity($data);
         } catch (Exception $e) {
             DB::rollBack();

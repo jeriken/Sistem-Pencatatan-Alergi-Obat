@@ -1,46 +1,8 @@
 <template>
   <div>
     <template v-if="!showMaintenancePage">
-      <badaso-breadcrumb-hover full>
+      <badaso-breadcrumb-hover full :visibleButtonAction="selected.length != 0">
         <template slot="action">
-          <badaso-dropdown-item
-            icon="filter_list_alt"
-            @click="showFilter = true"
-          >
-            Filter Data
-          </badaso-dropdown-item>
-          <download-excel
-            :data="dataMap"
-            :fields="fieldsForExcel"
-            :worksheet="dataType.displayNameSingular"
-            :name="dataType.displayNameSingular + '.xls'"
-            class="crud-generated__excel-button"
-            v-if="$helper.isAllowedToModifyGeneratedCRUD('laporan', dataType)"
-          >
-            <badaso-dropdown-item
-              icon="file_upload"
-              v-if="$helper.isAllowedToModifyGeneratedCRUD('laporan', dataType)"
-            >
-              {{ $t("action.exportToExcel") }}
-            </badaso-dropdown-item>
-          </download-excel>
-          <badaso-dropdown-item
-            icon="file_upload"
-            v-if="$helper.isAllowedToModifyGeneratedCRUD('laporan', dataType)"
-            @click="generatePdf"
-          >
-            {{ $t("action.exportToPdf") }}
-          </badaso-dropdown-item>
-          <badaso-dropdown-item
-            icon="add"
-            :to="{ name: 'CrudGeneratedAdd' }"
-            v-if="
-              isCanAdd &&
-              $helper.isAllowedToModifyGeneratedCRUD('add', dataType)
-            "
-          >
-            {{ $t("action.add") }}
-          </badaso-dropdown-item>
           <badaso-dropdown-item
             icon="list"
             :to="{ name: 'CrudGeneratedSort' }"
@@ -60,7 +22,7 @@
             @click.stop
             @click="confirmDeleteMultiple"
           >
-            {{ $t("action.bulkDelete") }}
+            {{ $t("action.bulkDelete") }} Permanent
           </badaso-dropdown-item>
           <badaso-dropdown-item
             icon="restore"
@@ -69,24 +31,6 @@
             @click="confirmRestoreMultiple"
           >
             {{ $t("action.bulkRestore") }}
-          </badaso-dropdown-item>
-          <badaso-dropdown-item
-            icon="settings"
-            v-if="
-              $helper.isAllowedToModifyGeneratedCRUD('maintenance', dataType)
-            "
-            @click.stop
-            @click="openMaintenanceDialog"
-          >
-            {{ $t("crudGenerated.maintenanceDialog.title") }}
-          </badaso-dropdown-item>
-          <badaso-dropdown-item
-            v-if="dataType.isSoftDelete && $helper.isAllowedToModifyGeneratedCRUD('bin', dataType)"
-            icon="restore_from_trash"
-            @click.stop
-            :to="{ name: 'CrudGeneratedBrowseBin' }"
-          >
-            {{ $t("action.showTrash") }}
           </badaso-dropdown-item>
         </template>
       </badaso-breadcrumb-hover>
@@ -97,7 +41,7 @@
             :active="Object.keys(errors).length > 0"
             color="danger"
             icon="new_releases"
-            class="crud-generated__errors"
+            style="margin-bottom: 20px"
           >
             <span v-for="key in Object.keys(errors)" :key="key">
               <span v-for="err in errors[key]" :key="err">
@@ -106,81 +50,10 @@
             </span>
           </vs-alert>
         </vs-col>
-        <vs-col vs-lg="12" v-if="showFilter">
-          <vs-card>
-            <div slot="header">
-              <h3>Cari Data secara lebih spesifik</h3>
-            </div>
-            <vs-row>
-              <vs-col vs-lg="6">
-                <badaso-text
-                  v-model="q"
-                  size="12"
-                  :label="dataType.dataRows[5].displayName"
-                  placeholder="Supriyati"
-                ></badaso-text>
-                <badaso-select
-                  :label="dataType.dataRows[4].displayName"
-                  placeholder="Rumah sakit"
-                  v-model="rsid"
-                  size="12"
-                  :items="relationData.rs ? relationData.rs : []"
-                ></badaso-select>
-                <badaso-select
-                  label="Tahun pencatatan"
-                  placeholder="2022"
-                  v-model="catat"
-                  size="12"
-                  :items="tahunan ? tahunan : []"
-                ></badaso-select>
-              </vs-col>
-              <vs-col vs-lg="6">
-                <badaso-select
-                  :label="dataType.dataRows[13].displayName"
-                  placeholder="Pilih jenis kelamin"
-                  v-model="jk"
-                  size="12"
-                  :items="
-                    dataType.dataRows[13].details.items
-                      ? dataType.dataRows[13].details.items
-                      : []
-                  "
-                ></badaso-select>
-                <vs-col vs-lg="6">
-                  <badaso-text
-                    v-model="min"
-                    size="11"
-                    label="Usia Minimal"
-                    placeholder="3"
-                  ></badaso-text>
-                </vs-col>
-                <vs-col vs-lg="6">
-                  <badaso-text
-                    v-model="max"
-                    size="12"
-                    label="Usia Maksimal"
-                    placeholder="60"
-                  ></badaso-text>
-                </vs-col>
-                <vs-button
-                  color="primary"
-                  type="relief"
-                  @click="
-                    getEntity();
-                    showFilter = false;
-                  "
-                >
-                  <vs-icon icon="search"></vs-icon>
-                  Filter Data
-                </vs-button>
-              </vs-col>
-            </vs-row>
-          </vs-card>
-        </vs-col>
         <vs-col vs-lg="12">
           <vs-card>
             <div slot="header">
-              <h3>{{ dataType.displayNameSingular }}</h3>
+              <h3> TES ! </h3> 
             </div>
             <div>
               <badaso-table
@@ -193,7 +66,9 @@
                 stripe
                 description
                 :description-items="descriptionItems"
-                :description-title="$t('crudGenerated.footer.descriptionTitle')"
+                :description-title="`${$t(
+                  'crudGenerated.footer.descriptionTitle'
+                )} Permanent`"
                 :description-connector="
                   $t('crudGenerated.footer.descriptionConnector')
                 "
@@ -202,236 +77,277 @@
               >
                 <template slot="thead">
                   <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[15].field
-                      )
-                    "
-                    >{{ dataType.dataRows[15].displayName }}</vs-th
+                    v-for="(dataRow, index) in dataType.dataRows"
+                    :key="index"
+                    :sort-key="$caseConvert.stringSnakeToCamel(dataRow.field)"
                   >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[5].field
-                      )
-                    "
-                    >{{ dataType.dataRows[5].displayName }}</vs-th
-                  >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[4].field
-                      )
-                    "
-                    >{{ dataType.dataRows[4].displayName }}</vs-th
-                  >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[7].field
-                      )
-                    "
-                    >Usia</vs-th
-                  >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[13].field
-                      )
-                    "
-                    >{{ dataType.dataRows[13].displayName }}</vs-th
-                  >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[8].field
-                      )
-                    "
-                    >{{ dataType.dataRows[8].displayName }}</vs-th
-                  >
-                  <vs-th
-                    :sort-key="
-                      $caseConvert.stringSnakeToCamel(
-                        dataType.dataRows[14].field
-                      )
-                    "
-                    >{{ dataType.dataRows[14].displayName }}</vs-th
-                  >
-                  <vs-th>{{ dataType.dataRows[1].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[2].displayName }}</vs-th>
-                  <vs-th>{{ dataType.dataRows[3].displayName }}</vs-th>
+                    <template v-if="dataRow.browse == 1">
+                      {{ dataRow.displayName }}
+                    </template>
+                  </vs-th>
                   <vs-th> {{ $t("crudGenerated.header.action") }} </vs-th>
                 </template>
+
                 <template slot-scope="{ data }">
-                  <vs-tr :data="rec" :key="index" v-for="(rec, index) in data">
-                    <vs-td :data="rec.tglCatat">
-                      {{ date(rec.tglCatat) }}
-                    </vs-td>
-                    <vs-td :data="rec.nama">
-                      {{ rec.nama }}
-                    </vs-td>
-                    <vs-td :data="rec.rs.nama">
-                      {{ rec.rs.nama }}
-                    </vs-td>
-                    <vs-td :data="rec.tglLahir">
-                      {{ usia(rec.tglLahir) }}
-                    </vs-td>
-                    <vs-td :data="rec.jenkel">
-                      {{ rec.jenkel }}
-                    </vs-td>
-                    <vs-td :data="rec.alamat">
-                      {{ rec.alamat }}
-                    </vs-td>
-                    <vs-td :data="rec.keterangan">
-                      {{ rec.keterangan }}
-                    </vs-td>
-                    <vs-td :data="rec.ktpId" v-if="rec.ktpId">
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="check"
-                        :to="{
-                          path: '/dashboard/general/ktp/' + rec.ktpId,
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.ktpId" v-else>
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="add"
-                        color="danger"
-                        :to="{
-                          path: '/dashboard/general/ktp/add',
-                          query: { ids: rec.id },
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.bpjsId" v-if="rec.bpjsId">
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="check"
-                        :to="{
-                          path: '/dashboard/general/bpjs/' + rec.bpjsId,
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.bpjsId" v-else>
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="add"
-                        color="danger"
-                        :to="{
-                          path: '/dashboard/general/bpjs/add',
-                          query: { ids: rec.id },
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.alergiId" v-if="rec.alergiId">
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="check"
-                        :to="{
-                          path: '/dashboard/general/alergi/' + rec.alergiId,
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td :data="rec.alergiId" v-else>
-                      <vs-button
-                        size="large"
-                        type="flat"
-                        icon="add"
-                        color="danger"
-                        :to="{
-                          path: '/dashboard/general/alergi/add',
-                          query: { ids: rec.id },
-                        }"
-                      ></vs-button>
-                    </vs-td>
-                    <vs-td class="crud-generated__button">
-                      <badaso-dropdown vs-trigger-click>
-                        <vs-button
-                          size="default"
-                          type="border"
-                          icon="more_vert"
-                        ></vs-button>
-                        <vs-dropdown-menu>
-                          <badaso-dropdown-item
-                            :to="{
-                              name: 'CrudGeneratedRead',
-                              params: {
-                                id: rec.id,
-                                slug: $route.params.slug,
-                              },
-                            }"
-                            v-if="
-                              isCanRead &&
-                              $helper.isAllowedToModifyGeneratedCRUD(
-                                'read',
-                                dataType.name
-                              ) &&
-                              !isShowDataRecycle
-                            "
-                            icon="visibility"
+                  <vs-tr
+                    :data="record"
+                    :key="index"
+                    v-for="(record, index) in data"
+                    :state="
+                      idsOfflineDeleteRecord.includes(record.id.toString())
+                        ? 'danger'
+                        : 'default'
+                    "
+                  >
+                    <template
+                      v-if="
+                        !idsOfflineDeleteRecord.includes(
+                          record.id.toString()
+                        ) || !isOnline
+                      "
+                    >
+                      <vs-td
+                        v-for="(dataRow, indexColumn) in dataType.dataRows"
+                        :key="indexColumn"
+                        :data="
+                          data[index][
+                            $caseConvert.stringSnakeToCamel(dataRow.field)
+                          ]
+                        "
+                      >
+                        <template v-if="dataRow.browse == 1">
+                          <img
+                            v-if="dataRow.type == 'upload_image'"
+                            :src="`${
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
+                            }`"
+                            width="100%"
+                            alt=""
+                          />
+                          <div
+                            v-else-if="dataRow.type == 'upload_image_multiple'"
+                            style="width: 100%"
                           >
-                            Detail
-                          </badaso-dropdown-item>
-                          <badaso-dropdown-item
-                            :to="{
-                              name: 'CrudGeneratedEdit',
-                              params: {
-                                id: rec.id,
-                                slug: $route.params.slug,
-                              },
-                            }"
-                            v-if="
-                              isCanEdit &&
-                              $helper.isAllowedToModifyGeneratedCRUD(
-                                'edit',
-                                dataType
-                              ) &&
-                              !isShowDataRecycle
+                            <img
+                              v-for="(image, indexImage) in stringToArray(
+                                record[
+                                  $caseConvert.stringSnakeToCamel(dataRow.field)
+                                ]
+                              )"
+                              :key="indexImage"
+                              :src="`${image}`"
+                              width="100%"
+                              alt=""
+                              style="margin-bottom: 10px"
+                            />
+                          </div>
+                          <span
+                            v-else-if="dataRow.type == 'editor'"
+                            v-html="
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
                             "
-                            icon="edit"
-                          >
-                            Edit
-                          </badaso-dropdown-item>
-                          <badaso-dropdown-item
-                            icon="delete"
-                            @click="confirmDelete(rec.id)"
-                            v-if="
-                              !idsOfflineDeleteRecord.includes(
-                                rec.id.toString()
-                              ) &&
-                              $helper.isAllowedToModifyGeneratedCRUD(
-                                'delete',
-                                dataType
-                              )
+                          ></span>
+                          <a
+                            v-else-if="dataRow.type == 'url'"
+                            :href="
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
                             "
+                            target="_blank"
+                            >{{
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
+                            }}</a
                           >
-                            Delete
-                          </badaso-dropdown-item>
-                          <badaso-dropdown-item
-                            @click="confirmDeleteDataPending(rec.id)"
-                            icon="delete_outline"
-                            v-if="
-                              idsOfflineDeleteRecord.includes(
-                                rec.id.toString()
-                              ) && !isShowDataRecycle
+                          <a
+                            v-else-if="dataRow.type == 'upload_file'"
+                            :href="`${$api.badasoFile.download(
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
+                            )}`"
+                            target="_blank"
+                            >{{
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
+                            }}</a
+                          >
+                          <div
+                            v-else-if="dataRow.type == 'upload_file_multiple'"
+                            style="width: 100%"
+                          >
+                            <p
+                              v-for="(file, indexFile) in stringToArray(
+                                record[
+                                  $caseConvert.stringSnakeToCamel(dataRow.field)
+                                ]
+                              )"
+                              :key="indexFile"
+                            >
+                              <a
+                                :href="`${$api.badasoFile.download(file)}`"
+                                target="_blank"
+                                >{{ file }}</a
+                              >
+                            </p>
+                          </div>
+                          <p
+                            v-else-if="
+                              dataRow.type == 'radio' ||
+                              dataRow.type == 'select'
                             "
                           >
                             {{
-                              $t(
-                                "offlineFeature.crudGenerator.deleteDataPending"
+                              bindSelection(
+                                dataRow.details.items,
+                                record[
+                                  $caseConvert.stringSnakeToCamel(dataRow.field)
+                                ]
                               )
                             }}
-                          </badaso-dropdown-item>
-                        </vs-dropdown-menu>
-                      </badaso-dropdown>
-                    </vs-td>
+                          </p>
+                          <div
+                            v-else-if="
+                              dataRow.type == 'select_multiple' ||
+                              dataRow.type == 'checkbox'
+                            "
+                            style="width: 100%"
+                          >
+                            <p
+                              v-for="(selected, indexSelected) in stringToArray(
+                                record[
+                                  $caseConvert.stringSnakeToCamel(dataRow.field)
+                                ]
+                              )"
+                              :key="indexSelected"
+                            >
+                              {{
+                                bindSelection(dataRow.details.items, selected)
+                              }}
+                            </p>
+                          </div>
+                          <div v-else-if="dataRow.type == 'color_picker'">
+                            <div
+                              :style="`width: 100%; height: 14px; background-color: ${
+                                record[
+                                  $caseConvert.stringSnakeToCamel(dataRow.field)
+                                ]
+                              }`"
+                            ></div>
+                            {{
+                              record[
+                                $caseConvert.stringSnakeToCamel(dataRow.field)
+                              ]
+                            }}
+                          </div>
+                          <span v-else-if="dataRow.type == 'relation'">{{
+                            displayRelationData(record, dataRow)
+                          }}</span>
+                          <span v-else>{{
+                            record[
+                              $caseConvert.stringSnakeToCamel(dataRow.field)
+                            ]
+                          }}</span>
+                        </template>
+                      </vs-td>
+                      <vs-td style="width: 1%; white-space: nowrap">
+                        <badaso-dropdown vs-trigger-click>
+                          <vs-button
+                            size="large"
+                            type="flat"
+                            icon="more_vert"
+                          ></vs-button>
+                          <vs-dropdown-menu>
+                            <badaso-dropdown-item
+                              :to="{
+                                name: 'CrudGeneratedRead',
+                                params: {
+                                  id: data[index].id,
+                                  slug: $route.params.slug,
+                                },
+                              }"
+                              v-if="
+                                isCanRead &&
+                                $helper.isAllowedToModifyGeneratedCRUD(
+                                  'read',
+                                  dataType.name
+                                ) &&
+                                !isShowDataRecycle
+                              "
+                              icon="visibility"
+                            >
+                              Detail
+                            </badaso-dropdown-item>
+                            <badaso-dropdown-item
+                              :to="{
+                                name: 'CrudGeneratedEdit',
+                                params: {
+                                  id: data[index].id,
+                                  slug: $route.params.slug,
+                                },
+                              }"
+                              v-if="
+                                isCanEdit &&
+                                $helper.isAllowedToModifyGeneratedCRUD(
+                                  'edit',
+                                  dataType
+                                ) &&
+                                !isShowDataRecycle
+                              "
+                              icon="edit"
+                            >
+                              Edit
+                            </badaso-dropdown-item>
+                            <badaso-dropdown-item
+                              icon="delete"
+                              @click="confirmDelete(data[index].id)"
+                              v-if="
+                                !idsOfflineDeleteRecord.includes(
+                                  record.id.toString()
+                                ) &&
+                                $helper.isAllowedToModifyGeneratedCRUD(
+                                  'delete',
+                                  dataType
+                                )
+                              "
+                            >
+                              Delete Permanent
+                            </badaso-dropdown-item>
+                            <badaso-dropdown-item
+                              @click="confirmDeleteDataPending(data[index].id)"
+                              icon="delete_outline"
+                              v-if="
+                                idsOfflineDeleteRecord.includes(
+                                  record.id.toString()
+                                ) && !isShowDataRecycle
+                              "
+                            >
+                              {{
+                                $t(
+                                  "offlineFeature.crudGenerator.deleteDataPending"
+                                )
+                              }}
+                            </badaso-dropdown-item>
+                            <badaso-dropdown-item
+                              @click="
+                                confirmRestoreDataSoftDelete(data[index].id)
+                              "
+                              icon="restore"
+                              v-if="isShowDataRecycle"
+                            >
+                              {{ $t("softDelete.crudGenerator.restore") }}
+                            </badaso-dropdown-item>
+                          </vs-dropdown-menu>
+                        </badaso-dropdown>
+                      </vs-td>
+                    </template>
                   </vs-tr>
                 </template>
               </badaso-table>
@@ -502,16 +418,14 @@
                                   $caseConvert.stringSnakeToCamel(dataRow.field)
                                 ]
                               "
-                              width="20%"
+                              width="100%"
                               alt=""
                             />
                             <div
                               v-else-if="
                                 dataRow.type == 'upload_image_multiple'
                               "
-                              class="
-                                crud-generated__item--upload-image-multiple
-                              "
+                              style="width: 100%"
                             >
                               <img
                                 v-for="(image, indexImage) in stringToArray(
@@ -523,9 +437,9 @@
                                 )"
                                 :key="indexImage"
                                 :src="`${image}`"
-                                width="20%"
+                                width="100%"
                                 alt=""
-                                class="crud-generated__item--image"
+                                style="margin-bottom: 10px"
                               />
                             </div>
                             <span
@@ -552,11 +466,15 @@
                             >
                             <a
                               v-else-if="dataRow.type == 'upload_file'"
-                              :href="`${
-                                record[
-                                  $caseConvert.stringSnakeToCamel(dataRow.field)
-                                ]
-                              }`"
+                              :href="`${$api.badasoFile.download(
+                                getDownloadUrl(
+                                  record[
+                                    $caseConvert.stringSnakeToCamel(
+                                      dataRow.field
+                                    )
+                                  ]
+                                )
+                              )}`"
                               target="_blank"
                               >{{
                                 getDownloadUrl(
@@ -570,7 +488,7 @@
                             >
                             <div
                               v-else-if="dataRow.type == 'upload_file_multiple'"
-                              class="crud-generated__item--upload-file-multiple"
+                              style="width: 100%"
                             >
                               <p
                                 v-for="(file, indexFile) in stringToArray(
@@ -582,9 +500,13 @@
                                 )"
                                 :key="indexFile"
                               >
-                                <a :href="`${file}`" target="_blank">{{
-                                  getDownloadUrl(file)
-                                }}</a>
+                                <a
+                                  :href="`${$api.badasoFile.download(
+                                    getDownloadUrl(file)
+                                  )}`"
+                                  target="_blank"
+                                  >{{ getDownloadUrl(file) }}</a
+                                >
                               </p>
                             </div>
                             <p
@@ -609,7 +531,7 @@
                                 dataRow.type == 'select_multiple' ||
                                 dataRow.type == 'checkbox'
                               "
-                              class="crud-generated__item--select-multiple"
+                              style="width: 100%"
                             >
                               <p
                                 v-for="(
@@ -630,8 +552,7 @@
                             </div>
                             <div v-else-if="dataRow.type == 'color_picker'">
                               <div
-                                class="crud-generated__item--color-picker"
-                                :style="`background-color: ${
+                                :style="`width: 100%; height: 14px; background-color: ${
                                   record[
                                     $caseConvert.stringSnakeToCamel(
                                       dataRow.field
@@ -655,7 +576,7 @@
                             }}</span>
                           </template>
                         </vs-td>
-                        <vs-td class="crud-generated__button">
+                        <vs-td style="width: 1%; white-space: nowrap">
                           <badaso-dropdown vs-trigger-click>
                             <vs-button
                               size="large"
@@ -745,8 +666,9 @@
         <vs-prompt
           @accept="saveMaintenanceState"
           :active.sync="maintenanceDialog"
+          class="mb-0"
         >
-          <vs-row>
+          <vs-row class="mb-0">
             <badaso-switch
               :label="$t('crudGenerated.maintenanceDialog.switch')"
               :placeholder="$t('crudGenerated.maintenanceDialog.switch')"
@@ -780,11 +702,12 @@
 
       <vs-row v-if="$helper.isAllowedToModifyGeneratedCRUD('browse', dataType)">
         <vs-col vs-lg="12">
-          <div class="badaso-maintenance__container">
-            <img :src="`${maintenanceImg}`" alt="Maintenance Icon" />
-            <h1 class="badaso-maintenance__text">
-              We are under <br />maintenance
-            </h1>
+          <div
+            class="flex flex-direction-column justify-content-center align-items-center"
+          >
+            <img src="/badaso-images/maintenance.png" alt="Maintenance Icon" />
+
+            <h1 class="mt-4 text-center">We are under <br />maintenance</h1>
           </div>
         </vs-col>
       </vs-row>
@@ -793,21 +716,17 @@
 </template>
 
 <script>
-import Vue from "vue";
 import * as _ from "lodash";
-import downloadExcel from "vue-json-excel";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 export default {
-  components: { downloadExcel },
-  name: "CrudGeneratedBrowse",
+  name: "CrudGeneratedBrowseBin",
   data: () => ({
     errors: {},
     data: {},
     descriptionItems: [10, 50, 100],
     selected: [],
     records: [],
-    dataMap: [],
     dataType: [],
     willDeleteId: null,
     isCanAdd: false,
@@ -821,26 +740,13 @@ export default {
     orderField: "",
     orderDirection: "",
     rowPerPage: null,
-    showFilter: false,
-    q: null,
-    min: null,
-    max: null,
-    jk: null,
-    catat: null,
-    tahunan: [
-      { label: "2021", value: 2021 },
-      { label: "2022", value: 2022 },
-      { label: "2023", value: 2023 },
-    ],
-    alreadyExport: false,
-    relationData: {},
     fieldsForExcel: {},
     fieldsForPdf: [],
     idsOfflineDeleteRecord: [],
     maintenanceDialog: false,
     isMaintenance: false,
     showMaintenancePage: false,
-    isShowDataRecycle: false,
+    isShowDataRecycle: true,
   }),
   watch: {
     $route: function (to, from) {
@@ -855,45 +761,9 @@ export default {
   },
   mounted() {
     this.getEntity();
-    this.getRelationDataBySlug();
     this.loadIdsOfflineDelete();
   },
   methods: {
-    usia(date) {
-      var dateNew = new Date().getFullYear();
-      date = date.slice(0, 4);
-      return dateNew - date;
-    },
-    nik(nik) {
-      nik = new String(nik).substring(0, 6);
-      if (nik == 0) {
-        return "-";
-      } else {
-        return nik + "XXXXXXXXXX";
-      }
-    },
-    date(date) {
-      var dateNew = new Date(date);
-      return new Intl.DateTimeFormat("id-ID", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }).format(dateNew);
-    },
-    changeToMap() {
-      for (let i = 0; i < this.records.length; i++) {
-        const jsonData = [];
-        jsonData["tglCatat"] = this.date(this.records[i].tglCatat);
-        jsonData["nama"] = this.records[i].nama;
-        jsonData["rsId"] = this.records[i].rs.nama;
-        jsonData["tglLahir"] = this.usia(this.records[i].tglLahir);
-        jsonData["jenkel"] = this.records[i].jenkel;
-        jsonData["alamat"] = this.records[i].alamat;
-        jsonData["alergiId"] = this.records[i].alergi.data;
-        jsonData["keterangan"] = this.records[i].keterangan;
-        this.dataMap.push(jsonData);
-      }
-    },
     getDownloadUrl(item) {
       if (item == null || item == undefined) return;
 
@@ -909,6 +779,21 @@ export default {
         accept: () => this.deleteRecordDataPending(id),
         acceptText: this.$t("action.delete.accept"),
         cancelText: this.$t("action.delete.cancel"),
+        cancel: () => {
+          this.willDeleteId = null;
+        },
+      });
+    },
+    confirmRestoreDataSoftDelete(id) {
+      this.willDeleteId = id;
+      this.$vs.dialog({
+        type: "confirm",
+        color: "success",
+        title: this.$t("action.restore.title"),
+        text: this.$t("action.restore.text"),
+        accept: () => this.deleteRestoreDataSoftDelete(id),
+        acceptText: this.$t("action.restore.accept"),
+        cancelText: this.$t("action.restore.cancel"),
         cancel: () => {
           this.willDeleteId = null;
         },
@@ -941,31 +826,30 @@ export default {
         cancel: () => {},
       });
     },
+    confirmRestoreMultiple(id) {
+      this.$vs.dialog({
+        type: "confirm",
+        color: "success",
+        title: this.$t("action.restore.title"),
+        text: this.$t("action.restore.text"),
+        accept: this.restoreRecords,
+        acceptText: this.$t("action.restore.accept"),
+        cancelText: this.$t("action.restore.cancel"),
+        cancel: () => {},
+      });
+    },
     async getEntity() {
       this.$openLoader();
       try {
-        // const response = await this.$api.badasoEntity.browse({
-        //   slug: this.$route.params.slug,
-        //   limit: this.limit,
-        //   page: this.page,
-        //   filterValue: this.filter,
-        //   orderField: this.$caseConvert.snake(this.orderField),
-        //   orderDirection: this.$caseConvert.snake(this.orderDirection),
-        //   showSoftDelete: this.isShowDataRecycle,
-        // });
-        let paramData = {
-          q: this.q ,
-          rsid: this.rsid,
-          jk: this.jk,
-          min: this.min,
-          max: this.max,
-          catat: this.catat,
-        };
-        console.log(this.rsid);
-        let response = await Vue.prototype.$resource.get(
-          "/api/v1/custom/filter",
-          { params: paramData }
-        );
+        const response = await this.$api.badasoEntity.browse({
+          slug: this.$route.params.slug,
+          limit: this.limit,
+          page: this.page,
+          filterValue: this.filter,
+          orderField: this.$caseConvert.snake(this.orderField),
+          orderDirection: this.$caseConvert.snake(this.orderDirection),
+          showSoftDelete: this.isShowDataRecycle,
+        });
         const {
           data: { dataType },
         } = await this.$api.badasoTable.getDataType({
@@ -987,20 +871,16 @@ export default {
           return data;
         });
         this.dataType.dataRows = JSON.parse(JSON.stringify(dataRows));
-        const addFields = dataRows.filter((row) => row.add == 1);
-        const editFields = dataRows.filter((row) => row.edit == 1);
-        const readFields = dataRows.filter((row) => row.read == 1);
+        const addFields = _.filter(dataRows, ["add", 1]);
+        const editFields = _.filter(dataRows, ["edit", 1]);
+        const readFields = _.filter(dataRows, ["read", 1]);
         this.isCanAdd = addFields.length > 0;
         this.isCanEdit = editFields.length > 0;
         this.isCanRead = readFields.length > 0;
         if (this.dataType.orderColumn && this.dataType.orderDisplayColumn) {
           this.isCanSort = true;
         }
-        this.dataMap = []
-        this.changeToMap();
-        if(this.alreadyExport == false){
-          this.prepareExcelExporter();
-        }
+        this.prepareExcelExporter();
       } catch (error) {
         if (error.status == 503) {
           this.showMaintenancePage = true;
@@ -1012,29 +892,6 @@ export default {
           color: "danger",
         });
       }
-    },
-    getRelationDataBySlug() {
-      this.$openLoader();
-      this.$api.badasoTable
-        .relationDataBySlug({
-          slug: this.$route.params.slug,
-        })
-        .then((response) => {
-          this.$closeLoader();
-          this.relationData = response.data;
-          console.log(this.relationData);
-        })
-        .catch((error) => {
-          if (error.status == 503) {
-            this.isMaintenance = true;
-          }
-          this.$closeLoader();
-          this.$vs.notify({
-            title: this.$t("alert.danger"),
-            text: error.message,
-            color: "danger",
-          });
-        });
     },
     deleteRecordDataPending(id) {
       try {
@@ -1077,10 +934,10 @@ export default {
         console.error(error);
       }
     },
-    deleteRecord() {
+    deleteRestoreDataSoftDelete(id) {
       this.$openLoader();
       this.$api.badasoEntity
-        .delete({
+        .restore({
           slug: this.$route.params.slug,
           data: [
             {
@@ -1105,11 +962,71 @@ export default {
           });
         });
     },
+    deleteRecord() {
+      this.$openLoader();
+      this.$api.badasoEntity
+        .delete({
+          slug: this.$route.params.slug,
+          data: [
+            {
+              field: "id",
+              value: this.willDeleteId,
+            },
+          ],
+          isHardDelete: true,
+        })
+        .then((response) => {
+          this.$closeLoader();
+          this.getEntity();
+        })
+        .catch((error) => {
+          this.loadIdsOfflineDelete();
+
+          this.errors = error.errors;
+          this.$closeLoader();
+          this.$vs.notify({
+            title: this.$t("alert.danger"),
+            text: error.message,
+            color: "danger",
+          });
+        });
+    },
     deleteRecords() {
       const ids = this.selected.map((item) => item.id);
       this.$openLoader();
       this.$api.badasoEntity
         .deleteMultiple({
+          slug: this.$route.params.slug,
+          data: [
+            {
+              field: "ids",
+              value: ids.join(","),
+            },
+          ],
+          isHardDelete: true,
+        })
+        .then((response) => {
+          this.$closeLoader();
+          this.getEntity();
+        })
+        .catch((error) => {
+          this.selected = [];
+          this.loadIdsOfflineDelete();
+
+          this.errors = error.errors;
+          this.$closeLoader();
+          this.$vs.notify({
+            title: this.$t("alert.danger"),
+            text: error.message,
+            color: "danger",
+          });
+        });
+    },
+    restoreRecords() {
+      const ids = this.selected.map((item) => item.id);
+      this.$openLoader();
+      this.$api.badasoEntity
+        .restoreMultiple({
           slug: this.$route.params.slug,
           data: [
             {
@@ -1198,24 +1115,19 @@ export default {
       }
     },
     prepareExcelExporter() {
-      this.alreadyExport = true;
-      this.fieldsForExcel["Tanggal Catat"] = "tglCatat";
-      this.fieldsForExcel["Nama Lengkap"] = "nama";
-      this.fieldsForExcel["Rumah Sakit"] = "rsId";
-      this.fieldsForExcel["Usia"] = "tglLahir";
-      this.fieldsForExcel["Jenis Kelamin"] = "jenkel";
-      this.fieldsForExcel["Alamat"] = "alamat";
-      this.fieldsForExcel["Alergi Obat"] = "alergiId";
-      this.fieldsForExcel["Keterangan"] = "keterangan";
+      for (const iterator of this.dataType.dataRows) {
+        this.fieldsForExcel[iterator.displayName] =
+          this.$caseConvert.stringSnakeToCamel(iterator.field);
+      }
 
-      this.fieldsForPdf.push("Tanggal Catat");
-      this.fieldsForPdf.push("Nama Lengkap");
-      this.fieldsForPdf.push("Rumah Sakit");
-      this.fieldsForPdf.push("Usia");
-      this.fieldsForPdf.push("Jenis Kelamin");
-      this.fieldsForPdf.push("Alamat");
-      this.fieldsForPdf.push("Alergi Obat");
-      this.fieldsForPdf.push("Keterangan");
+      for (const iterator of this.dataType.dataRows) {
+        const string = this.$caseConvert.stringSnakeToCamel(iterator.field);
+        if (iterator.browse == 1) {
+          this.fieldsForPdf.push(
+            string.charAt(0).toUpperCase() + string.slice(1)
+          );
+        }
+      }
     },
     openMaintenanceDialog() {
       this.maintenanceDialog = true;
@@ -1240,23 +1152,17 @@ export default {
         });
     },
     generatePdf() {
-      let data = this.dataMap;
+      let data = this.records;
 
       const result = data.map(Object.values);
 
       // eslint-disable-next-line new-cap
       const doc = new jsPDF("l");
 
-      // Dynamic table title
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(28);
-      doc.text(this.dataType.displayNameSingular, 149, 20, "center");
-
-      // Data table
       doc.autoTable({
         head: [this.fieldsForPdf],
         body: result,
-        startY: 30,
+        startY: 15,
         // Default for all columns
         styles: { valign: "middle" },
         headStyles: { fillColor: [6, 187, 211] },
@@ -1264,11 +1170,18 @@ export default {
         columnStyles: { text: { cellWidth: "wrap" } },
       });
 
-      // Output Table title and data table in new tab
       const output = doc.output("blob");
-      data = window.URL.createObjectURL(output);
-      window.open(data, "_blank");
 
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(output);
+        return;
+      }
+
+      data = window.URL.createObjectURL(output);
+      const link = document.createElement("a");
+      link.href = data;
+      link.download = this.dataType.displayNameSingular + ".pdf";
+      link.click();
       setTimeout(function () {
         // For Firefox it is necessary to delay revoking the ObjectURL
         window.URL.revokeObjectURL(data);
@@ -1315,9 +1228,6 @@ export default {
         console.error(error);
       }
     },
-    async onSwitchChangeDataShow() {
-      await this.getEntity();
-    },
   },
   computed: {
     isOnline: {
@@ -1326,10 +1236,23 @@ export default {
         return isOnline;
       },
     },
-    maintenanceImg() {
-      const config = this.$store.getters["badaso/getConfig"];
-      return config.maintenanceImage;
-    },
   },
 };
 </script>
+<style lang="scss" scoped>
+.flex {
+  display: flex;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+.align-items-center {
+  align-items: center;
+}
+</style>

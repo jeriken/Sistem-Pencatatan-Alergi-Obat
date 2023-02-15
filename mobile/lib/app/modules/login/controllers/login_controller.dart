@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/app/data/services/app/service.dart';
 import 'package:mobile/app/data/services/auth/service.dart';
 
+import '../../../data/services/inactive/service.dart';
 import '../../../routes/app_pages.dart';
 import '../repository/login_repository.dart';
 
@@ -20,6 +21,7 @@ class LoginController extends GetxController {
   void onInit() async {
     app = Get.find<AppService>();
     auth = Get.find<AuthService>();
+    addEmail();
     await isLoggedCheck();
     super.onInit();
   }
@@ -44,6 +46,12 @@ class LoginController extends GetxController {
     });
   }
 
+  addEmail(){
+    if(auth!.dataUserEmail() != null){
+      emailController.text = auth!.dataUserEmail();
+    }
+  }
+
   login() async {
     final form = {
       'email': emailController.text,
@@ -56,6 +64,8 @@ class LoginController extends GetxController {
       app!.changeIsLogged(true);
       auth!.changeAccessToken(data.data.accessToken);
       auth!.changeUserName(data.data.user.name);
+      auth!.changeUserEmail(data.data.user.email);
+      auth!.changeUserAvatar(data.data.user.avatar);
       Get.offNamed(Routes.HOME);
     }else{
       showSnackbar(data.message);

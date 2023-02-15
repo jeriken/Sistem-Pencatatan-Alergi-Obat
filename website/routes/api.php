@@ -27,6 +27,7 @@ Route::group(['namespace' => 'App\Http\Controllers', 'as' => 'badaso.', 'middlew
         Route::group(['prefix' => 'custom'], function () {
             Route::get('/dashboard', 'CustomController@dashboard')->middleware(BadasoCheckPermissions::class.':custom_dashboard');
             Route::get('/browse', 'CustomController@browsePasien')->middleware(BadasoCheckPermissions::class.':custom_pasien_browse');
+            Route::get('/filter', 'CustomController@filterPasien')->middleware(BadasoCheckPermissions::class.':custom_pasien_filter');
             Route::get('/search', 'CustomController@searchPasien')->middleware(BadasoCheckPermissions::class.':custom_pasien_search');
         });
     });

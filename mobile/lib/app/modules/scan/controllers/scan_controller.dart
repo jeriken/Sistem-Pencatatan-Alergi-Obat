@@ -1,13 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
-class ScanController extends GetxController {
+import '../../../data/services/app/service.dart';
+import '../../../data/services/auth/service.dart';
+import '../../../routes/app_pages.dart';
+
+class ScanController extends GetxController with StateMixin {
+  AppService? app;
+  AuthService? auth;
   //TODO: Implement ScanController
   @override
-  void onInit() {
+  void onInit() async {
+    app = Get.find<AppService>();
+    auth = Get.find<AuthService>();
+    await isLoggedCheck();
     super.onInit();
   }
 
@@ -20,12 +31,51 @@ class ScanController extends GetxController {
   void onClose() {
     super.onClose();
   }
+  
+  isLoggedCheck() async {
+    await Future.delayed(Duration.zero, () {
+      if (app!.isLogged() == false) {
+        Get.offNamed(Routes.LOGIN);
+      }
+    });
+  }
 
-  void scanNfc() {
+  logOut() async {
+    app!.changeIsLogged(false);
+    auth!.changeAccessToken("");
+    auth!.changeUserName("");
+    auth!.changeUserEmail("");
+    auth!.changeUserAvatar("");
+
+    await Get.offAllNamed(Routes.LOGIN);
+  }
+
+  getName() => auth!.dataUserName();
+  getEmail() => auth!.dataUserEmail();
+  getAvatar() => auth!.dataUserAvatar();
+
+  void scanNfc() async {
     ValueNotifier<dynamic> result = ValueNotifier(null);
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable == false) {
+      change("Device tidak mendukung",
+          status: RxStatus.error("Device tidak memiliki fitur NFC"));
+      showSnackbar("Terdapat kesalahan");
+    }
+    String data;
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
       result.value = tag.data;
-      showingDialog(result.value);
+      print(result.value);
+      if(result.value['nfca'] != null){
+        data = jsonEncode(result.value['nfca']['identifier']);
+      }else if(result.value['nfcb'] != null){
+        data = jsonEncode(result.value['nfcb']['applicationData']);
+      }else{
+        data = "Data tidak cocok";
+      }
+      print(data);
+        change(data, status: RxStatus.success());
+        showSnackbar("Berhasil");
       NfcManager.instance.stopSession();
     });
   }
@@ -37,26 +87,21 @@ class ScanController extends GetxController {
           '#ff6666', 'Batalkan', true, ScanMode.BARCODE);
       print(barcodeScanRes);
       if (barcodeScanRes != "-1") {
-        showingDialog(barcodeScanRes);
+        change(barcodeScanRes, status: RxStatus.success());
+        showSnackbar("Berhasil");
+      } else {
+        change(barcodeScanRes, status: RxStatus.error("Coba scan lagi"));
+        showSnackbar("Terjadi Kesalahan");
       }
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
   }
 
-  showingDialog(message) {
-    Get.defaultDialog(
-        title: "Berhasil",
-        titleStyle: const TextStyle(fontSize: 14),
-        radius: 5,
-        confirmTextColor: Colors.white,
-        content: SelectableText(
-          message,
-          style: const TextStyle(fontSize: 20),
-          textAlign: TextAlign.center,
-          showCursor: true,
-          autofocus: true,
-          cursorWidth: 2,
-        ));
+  SnackbarController showSnackbar(message) {
+    return Get.showSnackbar(GetSnackBar(
+      message: message,
+      duration: const Duration(seconds: 3),
+    ));
   }
 }

@@ -1,14 +1,14 @@
 class PasienModel {
   String? message;
   Data? data;
-  Null? errors;
+  String? errors;
 
   PasienModel({this.message, this.data, this.errors});
 
   PasienModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    errors = json['errors'];
+    errors = json['errors'] != null ? "Error terjadi" : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -17,7 +17,9 @@ class PasienModel {
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['errors'] = this.errors;
+    if (this.errors != null) {
+      data['errors'] = this.errors;
+    }
     return data;
   }
 }
@@ -35,13 +37,14 @@ class Data {
   String? alergiId;
   String? createdAt;
   String? updatedAt;
+  String? deletedAt;
   String? rsId;
   String? jenkel;
-  Null? keterangan;
+  String? keterangan;
   String? tglCatat;
   Rs? rs;
-  Null? ktp;
-  Null? bpjs;
+  Ktp? ktp;
+  Bpjs? bpjs;
   Alergi? alergi;
 
   Data(
@@ -57,6 +60,7 @@ class Data {
       this.alergiId,
       this.createdAt,
       this.updatedAt,
+      this.deletedAt,
       this.rsId,
       this.jenkel,
       this.keterangan,
@@ -79,13 +83,14 @@ class Data {
     alergiId = json['alergiId'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    deletedAt = json['deletedAt'];
     rsId = json['rsId'];
     jenkel = json['jenkel'];
     keterangan = json['keterangan'];
     tglCatat = json['tglCatat'];
     rs = json['rs'] != null ? new Rs.fromJson(json['rs']) : null;
-    ktp = json['ktp'];
-    bpjs = json['bpjs'];
+    ktp = json['ktp'] != null ? new Ktp.fromJson(json['ktp']) : null;
+    bpjs = json['bpjs'] != null ? new Bpjs.fromJson(json['bpjs']) : null;
     alergi =
         json['alergi'] != null ? new Alergi.fromJson(json['alergi']) : null;
   }
@@ -104,6 +109,7 @@ class Data {
     data['alergiId'] = this.alergiId;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['deletedAt'] = this.deletedAt;
     data['rsId'] = this.rsId;
     data['jenkel'] = this.jenkel;
     data['keterangan'] = this.keterangan;
@@ -111,8 +117,12 @@ class Data {
     if (this.rs != null) {
       data['rs'] = this.rs!.toJson();
     }
-    data['ktp'] = this.ktp;
-    data['bpjs'] = this.bpjs;
+    if (this.ktp != null) {
+      data['ktp'] = this.ktp!.toJson();
+    }
+    if (this.bpjs != null) {
+      data['bpjs'] = this.bpjs!.toJson();
+    }
     if (this.alergi != null) {
       data['alergi'] = this.alergi!.toJson();
     }
@@ -155,6 +165,80 @@ class Rs {
     data['alamat'] = this.alamat;
     data['telepon'] = this.telepon;
     data['provinsi'] = this.provinsi;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Ktp {
+  int? id;
+  String? rfid;
+  String? agama;
+  String? pekerjaan;
+  String? createdAt;
+  String? updatedAt;
+
+  Ktp(
+      {this.id,
+      this.rfid,
+      this.agama,
+      this.pekerjaan,
+      this.createdAt,
+      this.updatedAt});
+
+  Ktp.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    rfid = json['rfid'];
+    agama = json['agama'];
+    pekerjaan = json['pekerjaan'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['rfid'] = this.rfid;
+    data['agama'] = this.agama;
+    data['pekerjaan'] = this.pekerjaan;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    return data;
+  }
+}
+
+class Bpjs {
+  int? id;
+  String? barcode;
+  String? nomor;
+  String? faskes;
+  String? createdAt;
+  String? updatedAt;
+
+  Bpjs(
+      {this.id,
+      this.barcode,
+      this.nomor,
+      this.faskes,
+      this.createdAt,
+      this.updatedAt});
+
+  Bpjs.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    barcode = json['barcode'];
+    nomor = json['nomor'];
+    faskes = json['faskes'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['barcode'] = this.barcode;
+    data['nomor'] = this.nomor;
+    data['faskes'] = this.faskes;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;

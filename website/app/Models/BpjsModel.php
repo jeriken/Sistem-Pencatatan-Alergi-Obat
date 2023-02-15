@@ -15,6 +15,6 @@ class BpjsModel extends Model
 
 
     public function pasien(){
-        return $this->hasOne(PasienModel::class, 'bpjs_id');
+        return $this->hasOne(PasienModel::class, 'bpjs_id', 'barcode');
     }
 }

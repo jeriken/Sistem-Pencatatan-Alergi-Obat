@@ -20,8 +20,12 @@ class AuthService extends GetxService {
 
   dataAccessToken() => box.read(accessToken);
   dataUserName() => box.read(userName);
+  dataUserEmail() => box.read(userEmail);
+  dataUserAvatar() => box.read(userAvatar);
   changeAccessToken(data) async => box.write(accessToken, data);
   changeUserName(data) async => box.write(userName, data);
+  changeUserEmail(data) async => box.write(userEmail, data);
+  changeUserAvatar(data) async => box.write(userAvatar, data);
 
   final userrData = AuthModel().obs;
 

@@ -46,9 +46,9 @@ class PasienCRUDDataTypeAdded extends Seeder
                 'description' => NULL,
                 'details' => NULL,
                 'notification' => '[]',
-                'is_soft_delete' => false,
+                'is_soft_delete' => true,
                 'created_at' => '2022-11-10T23:31:56.000000Z',
-                'updated_at' => '2022-11-11T14:51:49.000000Z',
+                'updated_at' => '2023-01-03T15:21:37.000000Z',
             ));
 
             Badaso::model('Permission')->generateFor('pasien');

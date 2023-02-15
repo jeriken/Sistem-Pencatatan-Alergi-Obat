@@ -29,6 +29,7 @@
                   ]
                 "
               ></badaso-textarea>
+              {{dataType.dataRows[1].field}}
             </vs-row>
           </vs-card>
         </vs-col>
